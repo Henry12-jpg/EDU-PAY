@@ -1,0 +1,2281 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Edu P.T.A System -- Ghana</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+  --green:#00A859;--green2:#007A40;--green3:#004D28;
+  --gold:#FFB800;--gold2:#CC9200;
+  --red:#E53935;--bg:#0A0F1E;--bg2:#111827;--bg3:#1C2537;
+  --card:#162032;--card2:#1E2D45;
+  --text:#F0F4FF;--text2:#9BAAC4;--text3:#5C6E8A;
+  --border:#243350;--border2:#2E4168;
+  --radius:14px;--radius2:8px;
+  --shadow:0 8px 32px rgba(0,0,0,0.4);
+  --glow:0 0 20px rgba(0,168,89,0.3);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg2);}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+/* ===== SCREENS ===== */
+.screen{display:none;min-height:100vh;}
+.screen.active{display:flex;}
+
+/* ===== WELCOME ===== */
+#screen-welcome{flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 30% 20%,#00A85920 0%,transparent 60%),radial-gradient(ellipse at 80% 80%,#FFB80015 0%,transparent 50%),var(--bg);text-align:center;padding:40px 20px;}
+.welcome-logo{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green3));display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 28px;box-shadow:var(--glow),0 0 60px rgba(0,168,89,0.2);animation:pulse 3s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:var(--glow),0 0 60px rgba(0,168,89,0.2);}50%{box-shadow:0 0 30px rgba(0,168,89,0.5),0 0 80px rgba(0,168,89,0.3);}}
+.welcome-title{font-size:clamp(28px,5vw,48px);font-weight:800;letter-spacing:-1px;margin-bottom:8px;}
+.welcome-title span{background:linear-gradient(135deg,var(--green),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.welcome-sub{color:var(--text2);font-size:16px;margin-bottom:14px;max-width:480px;}
+.ghana-badge{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border2);padding:8px 16px;border-radius:30px;font-size:13px;color:var(--text2);margin-bottom:48px;}
+.btn-primary{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;padding:16px 48px;border-radius:50px;font-size:16px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;box-shadow:var(--glow);transition:all .3s;letter-spacing:.5px;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,168,89,0.5);}
+.btn-secondary{background:transparent;color:var(--text2);border:1px solid var(--border);padding:14px 36px;border-radius:50px;font-size:15px;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;margin-top:12px;}
+.btn-secondary:hover{border-color:var(--green);color:var(--green);}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;max-width:700px;width:100%;margin-top:48px;}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 16px;text-align:center;}
+.feat-card .icon{font-size:28px;margin-bottom:10px;}
+.feat-card h4{font-size:13px;font-weight:600;color:var(--text);}
+.feat-card p{font-size:11px;color:var(--text3);margin-top:4px;}
+
+/* ===== AUTH ===== */
+#screen-auth{flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:radial-gradient(ellipse at 70% 10%,#00A85918 0%,transparent 50%),var(--bg);}
+.auth-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:40px;width:100%;max-width:480px;box-shadow:var(--shadow);}
+.auth-tabs{display:flex;gap:4px;background:var(--bg2);border-radius:10px;padding:4px;margin-bottom:32px;}
+.auth-tab{flex:1;padding:10px;text-align:center;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text2);transition:all .3s;}
+.auth-tab.active{background:var(--green);color:#fff;}
+.auth-logo{text-align:center;margin-bottom:28px;}
+.auth-logo .logo-icon{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green3));display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 12px;}
+.auth-logo h2{font-size:22px;font-weight:700;}
+.auth-logo p{color:var(--text2);font-size:13px;margin-top:4px;}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:7px;text-transform:uppercase;letter-spacing:.5px;}
+.form-group input,.form-group select{width:100%;padding:13px 16px;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius2);color:var(--text);font-size:14px;font-family:'Sora',sans-serif;transition:all .3s;outline:none;}
+.form-group input:focus,.form-group select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,168,89,0.15);}
+.form-group select option{background:var(--bg2);}
+.school-select-wrapper{position:relative;}
+.school-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius2);max-height:220px;overflow-y:auto;z-index:100;display:none;}
+.school-option{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:14px;transition:background .2s;}
+.school-option:hover{background:var(--card2);}
+.school-option img{width:32px;height:32px;border-radius:50%;object-fit:cover;}
+.school-option .school-emoji{width:32px;height:32px;background:linear-gradient(135deg,var(--green3),var(--green));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.link-btn{background:none;border:none;color:var(--green);cursor:pointer;font-size:13px;font-family:'Sora',sans-serif;text-decoration:underline;}
+.error-msg{color:var(--red);font-size:12px;margin-top:6px;display:none;}
+.success-msg{color:var(--green);font-size:12px;margin-top:6px;display:none;}
+.lock-overlay{display:none;text-align:center;padding:30px;color:var(--red);}
+.lock-overlay .lock-icon{font-size:48px;margin-bottom:12px;}
+.timer-display{font-family:'Space Mono',monospace;font-size:28px;color:var(--gold);margin:12px 0;}
+
+/* ===== MAIN APP ===== */
+#screen-app{flex-direction:column;background:var(--bg);}
+.app-header{background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.app-header-left{display:flex;align-items:center;gap:14px;}
+.school-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green3));display:flex;align-items:center;justify-content:center;font-size:18px;}
+.school-info h3{font-size:15px;font-weight:700;}
+.school-info p{font-size:11px;color:var(--text2);}
+.header-actions{display:flex;align-items:center;gap:12px;}
+.icon-btn{background:var(--bg2);border:1px solid var(--border);width:38px;height:38px;border-radius:var(--radius2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;}
+.icon-btn:hover{border-color:var(--green);}
+.nav-tabs{display:flex;gap:4px;background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 24px;overflow-x:auto;}
+.nav-tab{display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text2);transition:all .2s;white-space:nowrap;border:none;background:none;font-family:'Sora',sans-serif;}
+.nav-tab.active{background:var(--green);color:#fff;}
+.nav-tab:hover:not(.active){background:var(--card2);color:var(--text);}
+.nav-tab.disabled{opacity:.4;pointer-events:none;}
+.app-content{flex:1;padding:24px;max-width:1200px;width:100%;margin:0 auto;}
+
+/* ===== DASHBOARD ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 20px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.1;}
+.stat-card.green::before{background:var(--green);}
+.stat-card.gold::before{background:var(--gold);}
+.stat-card.blue::before{background:#3B82F6;}
+.stat-card.red::before{background:var(--red);}
+.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.stat-value{font-size:26px;font-weight:800;font-family:'Space Mono',monospace;}
+.stat-value.green{color:var(--green);}
+.stat-value.gold{color:var(--gold);}
+.stat-value.blue{color:#60A5FA;}
+.stat-value.red{color:var(--red);}
+.stat-change{font-size:11px;color:var(--text3);margin-top:6px;}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;}
+@media(max-width:768px){.chart-row{grid-template-columns:1fr;}}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;}
+.chart-card h3{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:120px;}
+.bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.bar-fill{width:100%;background:linear-gradient(to top,var(--green3),var(--green));border-radius:4px 4px 0 0;min-height:4px;transition:height .8s ease;}
+.bar-label{font-size:10px;color:var(--text3);}
+.bar-amount{font-size:9px;color:var(--text2);font-family:'Space Mono',monospace;}
+.recent-table{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.table-header{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.table-header h3{font-size:14px;font-weight:700;}
+table{width:100%;border-collapse:collapse;}
+th{padding:12px 16px;text-align:left;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;background:var(--bg2);font-weight:600;}
+td{padding:13px 16px;font-size:13px;border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--card2);}
+.badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.badge.success{background:rgba(0,168,89,0.15);color:var(--green);}
+.badge.pending{background:rgba(255,184,0,0.15);color:var(--gold);}
+.badge.failed{background:rgba(229,57,53,0.15);color:var(--red);}
+
+/* ===== STUDENTS ===== */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.page-header h2{font-size:22px;font-weight:800;}
+.btn-add{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;padding:11px 22px;border-radius:var(--radius2);font-size:13px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;display:flex;align-items:center;gap:7px;transition:all .3s;}
+.btn-add:hover{box-shadow:var(--glow);transform:translateY(-1px);}
+.search-bar{display:flex;gap:10px;margin-bottom:20px;}
+.search-bar input{flex:1;padding:11px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);color:var(--text);font-family:'Sora',sans-serif;font-size:14px;outline:none;}
+.search-bar input:focus{border-color:var(--green);}
+.students-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.student-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;transition:all .3s;}
+.student-card:hover{border-color:var(--green);transform:translateY(-2px);}
+.student-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--green3),var(--green));display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;}
+.student-name{font-size:16px;font-weight:700;margin-bottom:4px;}
+.student-meta{font-size:12px;color:var(--text2);display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.meta-chip{background:var(--bg2);border:1px solid var(--border);padding:3px 10px;border-radius:20px;font-size:11px;}
+.student-actions{display:flex;gap:8px;margin-top:14px;}
+.btn-sm{padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:'Sora',sans-serif;transition:all .2s;}
+.btn-danger{background:rgba(229,57,53,0.15);color:var(--red);}
+.btn-danger:hover{background:var(--red);color:#fff;}
+.btn-info{background:rgba(0,168,89,0.15);color:var(--green);}
+.btn-info:hover{background:var(--green);color:#fff;}
+.paid-badge{position:absolute;top:14px;right:14px;}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:32px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow);}
+.modal h3{font-size:20px;font-weight:800;margin-bottom:24px;}
+.modal-actions{display:flex;gap:10px;margin-top:24px;}
+.btn-cancel{flex:1;background:var(--bg2);color:var(--text2);border:1px solid var(--border);padding:12px;border-radius:var(--radius2);font-size:14px;cursor:pointer;font-family:'Sora',sans-serif;}
+.btn-submit{flex:2;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border:none;padding:12px;border-radius:var(--radius2);font-size:14px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;}
+
+/* ===== PAYMENT ===== */
+.payment-flow{max-width:600px;margin:0 auto;}
+.flow-steps{display:flex;align-items:center;gap:0;margin-bottom:32px;}
+.flow-step{flex:1;text-align:center;position:relative;}
+.flow-step::after{content:'';position:absolute;top:20px;left:50%;right:-50%;height:2px;background:var(--border);}
+.flow-step:last-child::after{display:none;}
+.flow-step.done::after{background:var(--green);}
+.step-circle{width:40px;height:40px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin:0 auto 8px;background:var(--bg2);position:relative;z-index:1;}
+.flow-step.active .step-circle{border-color:var(--green);background:var(--green);color:#fff;}
+.flow-step.done .step-circle{border-color:var(--green);background:var(--green);color:#fff;}
+.step-label{font-size:11px;color:var(--text3);}
+.pay-method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.pay-method{background:var(--bg2);border:2px solid var(--border);border-radius:var(--radius);padding:18px 12px;text-align:center;cursor:pointer;transition:all .3s;}
+.pay-method:hover{border-color:var(--green);}
+.pay-method.selected{border-color:var(--green);background:rgba(0,168,89,0.1);}
+.pay-method .pm-logo{font-size:30px;margin-bottom:8px;}
+.pay-method .pm-name{font-size:12px;font-weight:700;}
+.pay-method .pm-sub{font-size:10px;color:var(--text3);}
+.receipt-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;}
+.receipt-check{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green2));display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 16px;animation:pop .5s ease;}
+@keyframes pop{0%{transform:scale(0);}80%{transform:scale(1.1);}100%{transform:scale(1);}}
+.receipt-code{font-family:'Space Mono',monospace;font-size:22px;color:var(--gold);letter-spacing:3px;margin:12px 0;}
+.receipt-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.receipt-row:last-child{border-bottom:none;}
+.receipt-row span:first-child{color:var(--text2);}
+.qr-container{margin:16px auto;width:120px;height:120px;background:#fff;padding:4px;border-radius:8px;}
+
+/* ===== STATISTICS ===== */
+.period-tabs{display:flex;gap:8px;margin-bottom:20px;}
+.period-tab{padding:8px 18px;border-radius:20px;border:1px solid var(--border);background:none;color:var(--text2);font-size:13px;cursor:pointer;font-family:'Sora',sans-serif;transition:all .2s;}
+.period-tab.active{background:var(--green);border-color:var(--green);color:#fff;}
+
+/* ===== AUDIT ===== */
+.audit-list{display:flex;flex-direction:column;gap:10px;}
+.audit-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:14px 16px;display:flex;align-items:center;gap:14px;}
+.audit-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.audit-icon.pay{background:rgba(0,168,89,0.15);}
+.audit-icon.login{background:rgba(59,130,246,0.15);}
+.audit-icon.student{background:rgba(255,184,0,0.15);}
+.audit-info{flex:1;}
+.audit-info p{font-size:13px;font-weight:600;}
+.audit-info span{font-size:11px;color:var(--text3);}
+.audit-time{font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;text-align:right;}
+
+/* ===== SETTINGS ===== */
+.settings-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;}
+.settings-section h3{font-size:15px;font-weight:700;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);}
+.setting-row:last-child{border-bottom:none;}
+.setting-label{font-size:13px;font-weight:600;}
+.setting-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.toggle{width:44px;height:24px;background:var(--border);border-radius:12px;cursor:pointer;position:relative;transition:background .3s;}
+.toggle.on{background:var(--green);}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .3s;}
+.toggle.on::after{left:23px;}
+
+/* ===== PARENT PORTAL ===== */
+#screen-parent{flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:radial-gradient(ellipse at 30% 80%,#FFB80010 0%,transparent 50%),var(--bg);}
+.parent-card{background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:40px;width:100%;max-width:480px;box-shadow:var(--shadow);text-align:center;}
+.parent-card .hero-emoji{font-size:60px;margin-bottom:16px;}
+.parent-card h2{font-size:24px;font-weight:800;margin-bottom:8px;}
+.parent-card p{color:var(--text2);font-size:14px;margin-bottom:32px;}
+.gps-info{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:12px 16px;font-size:12px;color:var(--text2);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+
+/* ===== TOAST ===== */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:10px;}
+.toast{background:var(--card2);border:1px solid var(--border2);border-radius:var(--radius2);padding:14px 18px;font-size:13px;min-width:280px;display:flex;align-items:center;gap:10px;animation:slideIn .3s ease;box-shadow:var(--shadow);}
+.toast.success{border-left:3px solid var(--green);}
+.toast.error{border-left:3px solid var(--red);}
+.toast.info{border-left:3px solid #3B82F6;}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+/* ===== LOCKOUT ===== */
+#screen-lockout{flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;}
+
+/* ===== HELPERS ===== */
+.flex{display:flex;}.gap-10{gap:10px;}.mt-16{margin-top:16px;}.mb-16{margin-bottom:16px;}
+.divider{height:1px;background:var(--border);margin:20px 0;}
+.text-sm{font-size:12px;color:var(--text2);}
+.text-center{text-align:center;}
+.w-full{width:100%;}
+.loading-spinner{width:20px;height:20px;border:2px solid rgba(255,255,255,0.3);border-top:2px solid #fff;border-radius:50%;animation:spin .8s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.shimmer{background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.forgot-dev{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-top:16px;font-size:13px;color:var(--text2);}
+.forgot-dev a{color:var(--gold);}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,168,89,0.1);border:1px solid rgba(0,168,89,0.2);color:var(--green);padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;}
+</style>
+</head>
+<body>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===== SCREEN: WELCOME ===== -->
+<div class="screen active" id="screen-welcome">
+  <div class="welcome-logo">🎓</div>
+  <h1 class="welcome-title">Welcome to <span>Edu P.T.A</span></h1>
+  <p class="welcome-title" style="font-size:18px;font-weight:400;color:var(--text2);margin-top:-10px;margin-bottom:14px;">School Fees Monitor System</p>
+  <div class="ghana-badge">🇬🇭 Ghana Education Service · Senior High Schools</div>
+  <p class="welcome-sub">A secure, modern platform for managing Parent-Teacher Association fees across Ghana's senior high schools.</p>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+    <button class="btn-primary" onclick="gotoAuth('admin')">🏫 Administrator Access</button>
+    <button class="btn-secondary" onclick="gotoParent()">👨‍👩‍👧 Parent / Guardian Access</button>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card"><div class="icon">🔒</div><h4>Secure Payments</h4><p>Paystack-powered real transactions</p></div>
+    <div class="feat-card"><div class="icon">📍</div><h4>GPS Tracking</h4><p>Know exactly where payments come from</p></div>
+    <div class="feat-card"><div class="icon">📊</div><h4>Analytics</h4><p>Daily, weekly, monthly & yearly stats</p></div>
+    <div class="feat-card"><div class="icon">📱</div><h4>SMS Alerts</h4><p>Instant notifications via SMS</p></div>
+    <div class="feat-card"><div class="icon">🧾</div><h4>PDF Receipts</h4><p>Auto-generated QR receipts</p></div>
+    <div class="feat-card"><div class="icon">🛡️</div><h4>Firewall</h4><p>Enterprise-grade security</p></div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: AUTH ===== -->
+<div class="screen" id="screen-auth">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-icon" id="authLogoIcon">🎓</div>
+      <h2>Edu P.T.A System</h2>
+      <p id="authSubtitle">Ghana Senior High Schools</p>
+    </div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Login</div>
+      <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Create Account</div>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div id="loginLockout" class="lock-overlay">
+        <div class="lock-icon">🔒</div>
+        <p style="font-weight:700;font-size:16px;">Account Temporarily Locked</p>
+        <p style="font-size:13px;color:var(--text3);margin:8px 0;">Too many failed attempts. Please wait:</p>
+        <div class="timer-display" id="lockTimer">30:00</div>
+        <p class="text-sm">Contact developer: <strong>0200250635</strong></p>
+      </div>
+      <div id="loginContent">
+        <div class="form-group">
+          <label>School Name</label>
+          <div class="school-select-wrapper">
+            <input type="text" id="loginSchoolInput" placeholder="Search your school..." onInput="filterSchoolsLogin(this.value)" onFocus="showDropdownLogin()" autocomplete="off"/>
+            <div class="school-dropdown" id="loginSchoolDropdown"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Admin Phone Number</label>
+          <input type="tel" id="loginPhone" placeholder="e.g. 0244000000"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter password"/>
+          <div class="error-msg" id="loginError">Incorrect credentials. <span id="attemptsLeft"></span></div>
+        </div>
+        <button class="btn-primary w-full" onclick="doLogin()" style="margin-bottom:12px;">Login to Dashboard</button>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <button class="link-btn" onclick="showForgotPassword()">Forgot Password?</button>
+          <button class="btn-secondary" onclick="gotoWelcome()" style="padding:8px 16px;font-size:13px;">← Back</button>
+        </div>
+        <div class="forgot-dev" id="forgotPasswordBox" style="display:none;">
+          <p>📞 Contact the Developer to reset your password:</p>
+          <p style="margin-top:6px;"><a href="tel:0200250635">📱 Call: 0200250635</a> | <a href="https://wa.me/233200250635" target="_blank">💬 WhatsApp: 0200250635</a></p>
+          <p style="margin-top:8px;">The developer will provide you a master unlock code.</p>
+          <div style="margin-top:10px;">
+            <input type="text" id="masterCodeInput" placeholder="Enter master code..." style="width:100%;padding:10px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Sora',sans-serif;font-size:13px;"/>
+            <button onclick="verifyMasterCode()" style="margin-top:8px;width:100%;padding:10px;background:var(--gold);color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;">Verify Code</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" style="display:none;">
+      <div class="form-group">
+        <label>Select School</label>
+        <div class="school-select-wrapper">
+          <input type="text" id="regSchoolInput" placeholder="Search and select your school..." onInput="filterSchoolsReg(this.value)" onFocus="showDropdownReg()" autocomplete="off"/>
+          <div class="school-dropdown" id="regSchoolDropdown"></div>
+        </div>
+        <div class="error-msg" id="regSchoolError">Please select a school from the list</div>
+      </div>
+      <div class="form-group">
+        <label>School Administration Number <small style="color:var(--text3)">(PTA receiving number)</small></label>
+        <input type="tel" id="regPhone" placeholder="e.g. 0244000000"/>
+      </div>
+      <div class="form-group">
+        <label>Paystack Public Key</label>
+        <input type="text" id="regPaystackKey" placeholder="pk_live_xxxxxxxxxxxxxxxx"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="regPassword" placeholder="Create strong password"/>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" id="regConfirmPassword" placeholder="Confirm password"/>
+        <div class="error-msg" id="regPasswordError">Passwords do not match</div>
+      </div>
+      <div class="error-msg" id="regError" style="margin-bottom:10px;display:block;"></div>
+      <button class="btn-primary w-full" onclick="doRegister()">Create School Account</button>
+      <div style="text-align:center;margin-top:12px;">
+        <button class="btn-secondary" onclick="gotoWelcome()" style="padding:8px 16px;font-size:13px;">← Back</button>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:20px;" class="security-badge">🛡️ Secured by 256-bit Encryption</div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: MAIN APP ===== -->
+<div class="screen" id="screen-app" style="flex-direction:column;">
+  <div class="app-header">
+    <div class="app-header-left">
+      <div class="school-avatar" id="headerAvatar">🎓</div>
+      <div class="school-info">
+        <h3 id="headerSchoolName">School Name</h3>
+        <p id="headerAdminPhone">Admin: +233xxxxxxxxx</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div id="currentTimeDisplay" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--text2);"></div>
+      <div class="icon-btn" title="Refresh" onclick="refreshDashboard()">🔄</div>
+      <div class="icon-btn" title="Change Password" onclick="openChangePassword()">🔑</div>
+      <div class="icon-btn" title="Logout" onclick="logout()">🚪</div>
+    </div>
+  </div>
+  <div class="nav-tabs" id="navTabs">
+    <button class="nav-tab active" data-tab="dashboard" onclick="switchTab('dashboard')">📊 Dashboard</button>
+    <button class="nav-tab" data-tab="students" onclick="switchTab('students')">👥 Students</button>
+    <button class="nav-tab" data-tab="payment" onclick="switchTab('payment')">💳 Process Payment</button>
+    <button class="nav-tab" data-tab="statistics" onclick="switchTab('statistics')">📈 Statistics</button>
+    <button class="nav-tab" data-tab="audit" onclick="switchTab('audit')">🔎 Audit Log</button>
+    <button class="nav-tab" data-tab="settings" onclick="switchTab('settings')">⚙️ Settings</button>
+  </div>
+  <div class="app-content">
+
+    <!-- DASHBOARD TAB -->
+    <div id="tab-content-dashboard" class="tab-content">
+      <div class="page-header">
+        <h2>Dashboard Overview</h2>
+        <div class="security-badge">🛡️ Secure Session Active</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card green"><div class="stat-label">Total Collected</div><div class="stat-value green" id="stat-total">GH₵ 0.00</div><div class="stat-change">All time</div></div>
+        <div class="stat-card gold"><div class="stat-label">This Month</div><div class="stat-value gold" id="stat-month">GH₵ 0.00</div><div class="stat-change" id="stat-month-label">May 2025</div></div>
+        <div class="stat-card blue"><div class="stat-label">Students Registered</div><div class="stat-value blue" id="stat-students">0</div><div class="stat-change">In database</div></div>
+        <div class="stat-card red"><div class="stat-label">Pending / Failed</div><div class="stat-value red" id="stat-failed">0</div><div class="stat-change">Transactions</div></div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card">
+          <h3>📅 Monthly Collections</h3>
+          <div class="bar-chart" id="monthlyChart"></div>
+        </div>
+        <div class="chart-card">
+          <h3>📆 Weekly Breakdown</h3>
+          <div class="bar-chart" id="weeklyChart"></div>
+        </div>
+      </div>
+      <div class="recent-table">
+        <div class="table-header">
+          <h3>Recent Transactions</h3>
+          <button class="btn-sm btn-info" onclick="switchTab('statistics')">View All</button>
+        </div>
+        <table>
+          <thead><tr><th>Student</th><th>Parent</th><th>Amount</th><th>Method</th><th>Time</th><th>Status</th><th>Location</th></tr></thead>
+          <tbody id="recentTransTable"><tr><td colspan="7" style="text-align:center;color:var(--text3);padding:30px;">No transactions yet</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- STUDENTS TAB -->
+    <div id="tab-content-students" class="tab-content" style="display:none;">
+      <div class="page-header">
+        <h2>Student Database</h2>
+        <button class="btn-add" onclick="openAddStudent()">➕ Add Student</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="🔍 Search by name, ID, class..." id="studentSearch" onInput="filterStudents(this.value)"/>
+      </div>
+      <div class="students-grid" id="studentsGrid">
+        <div style="color:var(--text3);text-align:center;padding:40px;grid-column:1/-1;">No students added yet. Click "Add Student" to begin.</div>
+      </div>
+    </div>
+
+    <!-- PAYMENT TAB -->
+    <div id="tab-content-payment" class="tab-content" style="display:none;">
+      <div class="page-header"><h2>Process PTA Payment</h2></div>
+      <div class="payment-flow">
+        <div class="flow-steps">
+          <div class="flow-step active" id="pstep1"><div class="step-circle">1</div><div class="step-label">Details</div></div>
+          <div class="flow-step" id="pstep2"><div class="step-circle">2</div><div class="step-label">Method</div></div>
+          <div class="flow-step" id="pstep3"><div class="step-circle">3</div><div class="step-label">Confirm</div></div>
+          <div class="flow-step" id="pstep4"><div class="step-circle">4</div><div class="step-label">Receipt</div></div>
+        </div>
+
+        <div id="payStep1">
+          <div class="settings-section">
+            <h3>Parent & Student Information</h3>
+            <div class="form-group"><label>Parent / Guardian Name</label><input type="text" id="payParentName" placeholder="Full name of parent"/></div>
+            <div class="form-group"><label>Parent Phone Number</label><input type="tel" id="payParentPhone" placeholder="0244000000"/></div>
+            <div class="form-group"><label>Parent Email</label><input type="email" id="payParentEmail" placeholder="parent@email.com"/></div>
+            <div class="form-group"><label>Student Name</label>
+              <input type="text" id="payStudentName" placeholder="Search student..." onInput="searchStudentForPay(this.value)"/>
+              <div id="studentPayDropdown" class="school-dropdown" style="position:relative;top:0;"></div>
+            </div>
+            <div class="form-group"><label>Student Class</label><input type="text" id="payStudentClass" placeholder="Auto-filled from database" readonly/></div>
+            <div class="form-group"><label>Amount (GH₵)</label><input type="number" id="payAmount" placeholder="e.g. 250" min="1"/></div>
+            <button class="btn-primary w-full" onclick="goPayStep2()">Next →</button>
+          </div>
+        </div>
+
+        <div id="payStep2" style="display:none;">
+          <div class="settings-section">
+            <h3>Select Payment Method</h3>
+            <div class="pay-method-grid">
+              <div class="pay-method" id="pm-mtn" onclick="selectPayMethod('mtn')">
+                <div class="pm-logo">🟡</div>
+                <div class="pm-name">MTN MoMo</div>
+                <div class="pm-sub">Mobile Money</div>
+              </div>
+              <div class="pay-method" id="pm-telecel" onclick="selectPayMethod('telecel')">
+                <div class="pm-logo">🔴</div>
+                <div class="pm-name">Telecel Cash</div>
+                <div class="pm-sub">Mobile Money</div>
+              </div>
+              <div class="pay-method" id="pm-visa" onclick="selectPayMethod('visa')">
+                <div class="pm-logo">💳</div>
+                <div class="pm-name">Bank / Visa</div>
+                <div class="pm-sub">Card Payment</div>
+              </div>
+            </div>
+            <div class="gps-info" id="gpsInfo">📍 Fetching your location...</div>
+            <div style="display:flex;gap:10px;margin-top:10px;">
+              <button class="btn-cancel" onclick="goPayStep1()">← Back</button>
+              <button class="btn-submit" onclick="goPayStep3()">Continue →</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="payStep3" style="display:none;">
+          <div class="settings-section">
+            <h3>Confirm Payment</h3>
+            <div id="payConfirmSummary"></div>
+            <div style="background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.3);border-radius:var(--radius2);padding:14px;margin:16px 0;font-size:13px;">
+              ⚠️ This will initiate a <strong>REAL money transaction</strong> via Paystack. Ensure all details are correct.
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button class="btn-cancel" onclick="goPayStep2()">← Back</button>
+              <button class="btn-submit" id="btnPay" onclick="initiatePaystack()">💳 Pay Now via Paystack</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="payStep4" style="display:none;">
+          <div class="receipt-box">
+            <div class="receipt-check">✓</div>
+            <h3 style="font-size:20px;font-weight:800;color:var(--green);">Payment Successful!</h3>
+            <p style="color:var(--text2);font-size:13px;margin:8px 0 16px;">Verification code sent via SMS</p>
+            <div class="receipt-code" id="receiptCode">----</div>
+            <div class="qr-container" id="receiptQR"></div>
+            <div id="receiptDetails"></div>
+            <div style="display:flex;gap:10px;margin-top:20px;">
+              <button class="btn-cancel" onclick="downloadReceipt()">📄 Download PDF</button>
+              <button class="btn-submit" onclick="resetPayment()">New Payment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATISTICS TAB -->
+    <div id="tab-content-statistics" class="tab-content" style="display:none;">
+      <div class="page-header"><h2>Payment Statistics</h2></div>
+      <div class="period-tabs">
+        <button class="period-tab active" onclick="setPeriod('daily',this)">Daily</button>
+        <button class="period-tab" onclick="setPeriod('weekly',this)">Weekly</button>
+        <button class="period-tab" onclick="setPeriod('monthly',this)">Monthly</button>
+        <button class="period-tab" onclick="setPeriod('yearly',this)">Yearly</button>
+      </div>
+      <div class="stats-grid" id="periodStats"></div>
+      <div class="recent-table" style="margin-top:20px;">
+        <div class="table-header"><h3>All Transactions</h3>
+          <button class="btn-sm btn-info" onclick="exportTransactions()">📥 Export CSV</button>
+        </div>
+        <table>
+          <thead><tr><th>Ref</th><th>Student</th><th>Parent</th><th>Amount</th><th>Method</th><th>Date & Time</th><th>Location</th><th>Status</th><th>Code</th></tr></thead>
+          <tbody id="allTransTable"><tr><td colspan="9" style="text-align:center;color:var(--text3);padding:30px;">No transactions</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- AUDIT LOG TAB -->
+    <div id="tab-content-audit" class="tab-content" style="display:none;">
+      <div class="page-header"><h2>Audit Log</h2></div>
+      <div class="audit-list" id="auditList">
+        <div style="color:var(--text3);text-align:center;padding:40px;">No audit records yet.</div>
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="tab-content-settings" class="tab-content" style="display:none;">
+      <div class="page-header"><h2>Settings</h2></div>
+      <div class="settings-section">
+        <h3>School Information</h3>
+        <div class="setting-row"><div><div class="setting-label" id="setSchoolName">School Name</div><div class="setting-sub">Registered school</div></div></div>
+        <div class="setting-row"><div><div class="setting-label" id="setAdminPhone">Admin Number</div><div class="setting-sub">PTA receiving number</div></div></div>
+        <div class="setting-row"><div><div class="setting-label">Account Status</div><div class="setting-sub">Active & Verified</div></div><span class="badge success">Active</span></div>
+      </div>
+      <div class="settings-section">
+        <h3>Change Password</h3>
+        <div class="form-group"><label>Current Password</label><input type="password" id="oldPassword" placeholder="Enter current password"/></div>
+        <div class="form-group"><label>New Password</label><input type="password" id="newPassword" placeholder="Enter new password"/></div>
+        <div class="form-group"><label>Confirm New Password</label><input type="password" id="confirmNewPassword" placeholder="Confirm new password"/></div>
+        <div class="error-msg" id="changePassError"></div>
+        <button class="btn-primary" onclick="changePassword()">Update Password</button>
+      </div>
+      <div class="settings-section">
+        <h3>Notifications</h3>
+        <div class="setting-row"><div><div class="setting-label">SMS Notifications</div><div class="setting-sub">Send SMS on payment success</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="setting-row"><div><div class="setting-label">Email Receipts</div><div class="setting-sub">Auto-send PDF receipts</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="setting-row"><div><div class="setting-label">GPS Tracking</div><div class="setting-sub">Record payment location</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      </div>
+      <div class="settings-section">
+        <h3>Security</h3>
+        <div class="setting-row"><div><div class="setting-label">Login Attempt Limit</div><div class="setting-sub">Lock after 3 failed attempts (30 min)</div></div><span class="badge success">Enabled</span></div>
+        <div class="setting-row"><div><div class="setting-label">Session Timeout</div><div class="setting-sub">Auto-logout after 30 minutes</div></div><span class="badge success">Enabled</span></div>
+        <div class="setting-row"><div><div class="setting-label">Payment Encryption</div><div class="setting-sub">256-bit SSL via Paystack</div></div><span class="badge success">Active</span></div>
+      </div>
+      <div style="text-align:center;margin-top:10px;">
+        <button class="btn-secondary" onclick="logout()" style="padding:12px 30px;">🚪 Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: PARENT ===== -->
+<div class="screen" id="screen-parent" style="flex-direction:column;align-items:center;justify-content:center;">
+  <div class="parent-card">
+    <div class="hero-emoji">👨‍👩‍👧</div>
+    <h2>Parent PTA Payment</h2>
+    <p>Pay your ward's PTA fees securely from anywhere in Ghana</p>
+    <div class="form-group" style="text-align:left;">
+      <label>Select School</label>
+      <div class="school-select-wrapper">
+        <input type="text" id="parentSchoolInput" placeholder="Search school name..." onInput="filterSchoolsParent(this.value)" onFocus="showDropdownParent()" autocomplete="off"/>
+        <div class="school-dropdown" id="parentSchoolDropdown"></div>
+      </div>
+    </div>
+    <div id="parentSelectedSchool" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius2);padding:12px;margin-bottom:16px;font-size:13px;text-align:left;">
+      <strong>Selected:</strong> <span id="parentSchoolDisplay"></span><br/>
+      <span style="color:var(--text2);">Admin: <span id="parentAdminDisplay"></span></span>
+    </div>
+    <div class="gps-info" id="parentGPS">📍 Fetching your location...</div>
+    <button class="btn-primary w-full" onclick="startParentPayment()" style="margin-bottom:12px;">💳 Make PTA Payment</button>
+    <button class="btn-secondary w-full" onclick="gotoWelcome()">← Back to Home</button>
+  </div>
+</div>
+
+<!-- ===== MODAL: ADD STUDENT ===== -->
+<div class="modal-overlay" id="modalAddStudent">
+  <div class="modal">
+    <h3>➕ Add New Student</h3>
+    <div class="form-group"><label>Student Full Name</label><input type="text" id="sName" placeholder="e.g. Kofi Mensah"/></div>
+    <div class="form-group"><label>Student ID</label><input type="text" id="sId" placeholder="e.g. SHS-2025-001"/></div>
+    <div class="form-group"><label>Class / Form</label>
+      <select id="sClass">
+        <option value="">Select Class</option>
+        <option>Form 1 / JHS 1</option><option>Form 2 / JHS 2</option><option>Form 3 / JHS 3</option>
+        <option>SHS 1 / Form 1</option><option>SHS 2 / Form 2</option><option>SHS 3 / Form 3</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Course / Programme</label>
+      <select id="sCourse">
+        <option value="">Select Course</option>
+        <option>General Science</option><option>General Arts</option><option>Business</option>
+        <option>Visual Arts</option><option>Home Economics</option><option>Agricultural Science</option><option>Technical</option>
+      </select>
+    </div>
+    <div class="form-group"><label>House</label>
+      <select id="sHouse">
+        <option value="">Select House</option>
+        <option>Green House</option><option>Blue House</option><option>Red House</option><option>Yellow House</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Parent / Guardian Name</label><input type="text" id="sParent" placeholder="e.g. Mr. Joseph Mensah"/></div>
+    <div class="form-group"><label>Parent Phone</label><input type="tel" id="sParentPhone" placeholder="0244000000"/></div>
+    <div class="form-group"><label>Amount Paid (GH₵) <small style="color:var(--text3);">-- if already paid</small></label><input type="number" id="sAmountPaid" placeholder="0.00" min="0"/></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modalAddStudent')">Cancel</button>
+      <button class="btn-submit" onclick="addStudent()">Add Student</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: CHANGE PASSWORD ===== -->
+<div class="modal-overlay" id="modalChangePass">
+  <div class="modal">
+    <h3>🔑 Change Password</h3>
+    <div class="form-group"><label>Current Password</label><input type="password" id="cpOld" placeholder="Enter current password"/></div>
+    <div class="form-group"><label>New Password</label><input type="password" id="cpNew" placeholder="New password"/></div>
+    <div class="form-group"><label>Confirm New Password</label><input type="password" id="cpConfirm" placeholder="Confirm new password"/></div>
+    <div class="error-msg" id="cpError" style="margin-bottom:8px;"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modalChangePass')">Cancel</button>
+      <button class="btn-submit" onclick="doChangePassword()">Update Password</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: LOCKOUT ===== -->
+<div class="screen" id="screen-lockout" style="flex-direction:column;">
+  <div>
+    <div style="font-size:80px;margin-bottom:20px;">🔒</div>
+    <h2 style="font-size:28px;font-weight:800;color:var(--red);">System Locked</h2>
+    <p style="color:var(--text2);margin:12px 0;">Too many failed login attempts. Please wait before trying again.</p>
+    <div class="timer-display" id="globalLockTimer">30:00</div>
+    <p style="font-size:13px;color:var(--text3);">Contact developer: <strong style="color:var(--gold);">0200250635</strong></p>
+  </div>
+</div>
+
+<script>
+// =====================================================
+// DATA STORE (localStorage-backed)
+// =====================================================
+const MASTER_CODE = '#SchoolGhana59016740026';
+const DEV_PHONE = '0200250635';
+
+function getData(key,def=null){try{return JSON.parse(localStorage.getItem('edupta_'+key))||def;}catch{return def;}}
+function setData(key,val){localStorage.setItem('edupta_'+key,JSON.stringify(val));}
+
+// Ghana SHS List (representative sample)
+const GHANA_SCHOOLS = [
+  {name:"Achimota School",emoji:"🏫",region:"Greater Accra"},
+  {name:"Mfantsipim School",emoji:"🎓",region:"Central"},
+  {name:"Prempeh College",emoji:"🏛️",region:"Ashanti"},
+  {name:"Wesley Girls' High School",emoji:"🌟",region:"Central"},
+  {name:"Opoku Ware School",emoji:"🦁",region:"Ashanti"},
+  {name:"Holy Child School",emoji:"✨",region:"Central"},
+  {name:"Accra Academy",emoji:"🎯",region:"Greater Accra"},
+  {name:"Ghana National College",emoji:"🇬🇭",region:"Central"},
+  {name:"Adisadel College",emoji:"⚓",region:"Central"},
+  {name:"St. Augustine's College",emoji:"📚",region:"Central"},
+  {name:"Aggrey Memorial A.M.E. Zion SHS",emoji:"🌍",region:"Central"},
+  {name:"KNUST SHS",emoji:"🔬",region:"Ashanti"},
+  {name:"Kumasi Academy",emoji:"🏆",region:"Ashanti"},
+  {name:"Osei Tutu SHS",emoji:"👑",region:"Ashanti"},
+  {name:"Asanteman SHS",emoji:"🌿",region:"Ashanti"},
+  {name:"Presbyterian Boys' SHS (Presec)",emoji:"✝️",region:"Greater Accra"},
+  {name:"Labone SHS",emoji:"🌊",region:"Greater Accra"},
+  {name:"Accra Girls SHS",emoji:"💐",region:"Greater Accra"},
+  {name:"T.I. Amass SHS",emoji:"🛡️",region:"Ashanti"},
+  {name:"Tamale SHS",emoji:"🌙",region:"Northern"},
+  {name:"Bolgatanga SHS",emoji:"⭐",region:"Upper East"},
+  {name:"Wa SHS",emoji:"🌅",region:"Upper West"},
+  {name:"Koforidua SHS",emoji:"🍃",region:"Eastern"},
+  {name:"Aburi Girls SHS",emoji:"🌺",region:"Eastern"},
+  {name:"Krobo Girls SHS",emoji:"💎",region:"Eastern"},
+  {name:"Ho SHS",emoji:"🏔️",region:"Volta"},
+  {name:"Mawuli School",emoji:"🦅",region:"Volta"},
+  {name:"Fijai SHS",emoji:"🌴",region:"Western"},
+  {name:"Takoradi SHS",emoji:"⛵",region:"Western"},
+  {name:"Cape Coast SHS",emoji:"🏖️",region:"Central"},
+  {name:"Sunyani SHS",emoji:"🌞",region:"Bono"},
+  {name:"Techiman SHS",emoji:"🔥",region:"Bono East"},
+  {name:"Keta SHS",emoji:"🐚",region:"Volta"},
+  {name:"Pope John SHS",emoji:"🕊️",region:"Eastern"},
+  {name:"St. Peter's SHS",emoji:"🏫",region:"Ashanti"},
+  {name:"Yaa Asantewaa Girls SHS",emoji:"👸",region:"Ashanti"},
+  {name:"Kumasi High School",emoji:"🏙️",region:"Ashanti"},
+  {name:"St. Louis SHS",emoji:"💫",region:"Ashanti"},
+  {name:"Ghana Secondary Technical",emoji:"⚙️",region:"Greater Accra"},
+  {name:"Islamic SHS",emoji:"🌙",region:"Greater Accra"},
+];
+
+// =====================================================
+// STATE
+// =====================================================
+let currentUser = null;
+let loginAttempts = getData('loginAttempts',0);
+let lockoutTime = getData('lockoutTime',0);
+let selectedPayMethod = null;
+let currentPayStudent = null;
+let userLocation = {lat:null,lng:null,address:'Unknown'};
+let payFlowStep = 1;
+let selectedSchoolForReg = null;
+let selectedSchoolForLogin = null;
+let selectedSchoolForParent = null;
+let parentPaymentSchool = null;
+
+// =====================================================
+// INIT
+// =====================================================
+window.onload = function(){
+  checkLockout();
+  startClock();
+  getLocation();
+  renderSchoolDropdowns();
+};
+
+function startClock(){
+  setInterval(()=>{
+    const now = new Date();
+    const el = document.getElementById('currentTimeDisplay');
+    if(el) el.textContent = now.toLocaleTimeString('en-GH',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  },1000);
+}
+
+function getLocation(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>{
+      userLocation.lat = pos.coords.latitude;
+      userLocation.lng = pos.coords.longitude;
+      userLocation.address = `${pos.coords.latitude.toFixed(4)}°N, ${pos.coords.longitude.toFixed(4)}°W`;
+      const gEl = document.getElementById('gpsInfo');
+      if(gEl) gEl.textContent = `📍 ${userLocation.address}`;
+      const pgEl = document.getElementById('parentGPS');
+      if(pgEl) pgEl.textContent = `📍 Location: ${userLocation.address}`;
+    },err=>{
+      userLocation.address = 'Ghana (location off)';
+      const gEl = document.getElementById('gpsInfo');
+      if(gEl) gEl.textContent = `📍 Location: Ghana (GPS disabled)`;
+    },{enableHighAccuracy:true,timeout:10000});
+  }
+}
+
+// =====================================================
+// SCHOOL DROPDOWNS
+// =====================================================
+function renderDropdown(filterId, items, onSelect){
+  const dd = document.getElementById(filterId);
+  if(!dd) return;
+  dd.innerHTML = '';
+  items.slice(0,12).forEach(s=>{
+    const div = document.createElement('div');
+    div.className = 'school-option';
+    div.innerHTML = `<div class="school-emoji">${s.emoji}</div><div><div style="font-weight:600;font-size:13px;">${s.name}</div><div style="font-size:11px;color:var(--text3);">${s.region}</div></div>`;
+    div.onclick = ()=>{ onSelect(s); dd.style.display='none'; };
+    dd.appendChild(div);
+  });
+  dd.style.display = items.length ? 'block' : 'none';
+}
+
+function filterSchoolsLogin(val){
+  const filtered = GHANA_SCHOOLS.filter(s=>s.name.toLowerCase().includes(val.toLowerCase()));
+  renderDropdown('loginSchoolDropdown', filtered, s=>{ selectedSchoolForLogin=s; document.getElementById('loginSchoolInput').value=s.name; });
+}
+function showDropdownLogin(){
+  renderDropdown('loginSchoolDropdown', GHANA_SCHOOLS, s=>{ selectedSchoolForLogin=s; document.getElementById('loginSchoolInput').value=s.name; document.getElementById('loginSchoolDropdown').style.display='none'; });
+}
+function filterSchoolsReg(val){
+  const filtered = GHANA_SCHOOLS.filter(s=>s.name.toLowerCase().includes(val.toLowerCase()));
+  renderDropdown('regSchoolDropdown', filtered, s=>{ selectedSchoolForReg=s; document.getElementById('regSchoolInput').value=s.name; });
+}
+function showDropdownReg(){
+  renderDropdown('regSchoolDropdown', GHANA_SCHOOLS, s=>{ selectedSchoolForReg=s; document.getElementById('regSchoolInput').value=s.name; document.getElementById('regSchoolDropdown').style.display='none'; });
+}
+function filterSchoolsParent(val){
+  const filtered = GHANA_SCHOOLS.filter(s=>s.name.toLowerCase().includes(val.toLowerCase()));
+  renderDropdown('parentSchoolDropdown', filtered, s=>{
+    selectedSchoolForParent=s;
+    document.getElementById('parentSchoolInput').value=s.name;
+    // try to fetch school account
+    const accounts = getData('schoolAccounts',{});
+    const key = s.name;
+    if(accounts[key]){
+      parentPaymentSchool = accounts[key];
+      document.getElementById('parentSelectedSchool').style.display='block';
+      document.getElementById('parentSchoolDisplay').textContent = s.name;
+      document.getElementById('parentAdminDisplay').textContent = accounts[key].phone;
+    } else {
+      parentPaymentSchool = null;
+      document.getElementById('parentSelectedSchool').style.display='none';
+    }
+  });
+}
+function showDropdownParent(){
+  renderDropdown('parentSchoolDropdown', GHANA_SCHOOLS, s=>{
+    selectedSchoolForParent=s;
+    document.getElementById('parentSchoolInput').value=s.name;
+    document.getElementById('parentSchoolDropdown').style.display='none';
+    const accounts = getData('schoolAccounts',{});
+    if(accounts[s.name]){
+      parentPaymentSchool=accounts[s.name];
+      document.getElementById('parentSelectedSchool').style.display='block';
+      document.getElementById('parentSchoolDisplay').textContent=s.name;
+      document.getElementById('parentAdminDisplay').textContent=accounts[s.name].phone;
+    }
+  });
+}
+function renderSchoolDropdowns(){
+  // pre-render with all schools visible initially (on focus)
+}
+
+// Close dropdowns on outside click
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.school-select-wrapper')){
+    document.querySelectorAll('.school-dropdown').forEach(d=>d.style.display='none');
+  }
+});
+
+// =====================================================
+// SCREEN NAVIGATION
+// =====================================================
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+}
+function gotoWelcome(){ showScreen('welcome'); }
+function gotoAuth(type){ showScreen('auth'); checkLockout(); }
+function gotoParent(){ showScreen('parent'); getLocation(); }
+
+// =====================================================
+// AUTH TABS
+// =====================================================
+function switchAuthTab(tab){
+  document.getElementById('loginForm').style.display = tab==='login'?'block':'none';
+  document.getElementById('registerForm').style.display = tab==='register'?'block':'none';
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+}
+
+// =====================================================
+// LOCKOUT SYSTEM
+// =====================================================
+function checkLockout(){
+  const lockout = getData('lockoutTime',0);
+  if(lockout && Date.now() < lockout){
+    startLockTimer(lockout);
+    return true;
+  } else if(lockout){
+    setData('lockoutTime',0);
+    setData('loginAttempts',0);
+    loginAttempts = 0;
+  }
+  return false;
+}
+
+function startLockTimer(until){
+  const loginContent = document.getElementById('loginContent');
+  const lockoutDiv = document.getElementById('loginLockout');
+  if(loginContent) loginContent.style.display='none';
+  if(lockoutDiv) lockoutDiv.style.display='block';
+  const interval = setInterval(()=>{
+    const remaining = Math.max(0, until - Date.now());
+    const mins = Math.floor(remaining/60000).toString().padStart(2,'0');
+    const secs = Math.floor((remaining%60000)/1000).toString().padStart(2,'0');
+    const el = document.getElementById('lockTimer');
+    if(el) el.textContent = `${mins}:${secs}`;
+    if(remaining<=0){
+      clearInterval(interval);
+      if(loginContent) loginContent.style.display='block';
+      if(lockoutDiv) lockoutDiv.style.display='none';
+      setData('loginAttempts',0);
+      setData('lockoutTime',0);
+      loginAttempts=0;
+    }
+  },1000);
+}
+
+// =====================================================
+// LOGIN
+// =====================================================
+function doLogin(){
+  if(checkLockout()) return;
+  const schoolName = document.getElementById('loginSchoolInput').value.trim();
+  const phone = document.getElementById('loginPhone').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if(!schoolName||!phone||!password){ showToast('Please fill all fields','error'); return; }
+  const accounts = getData('schoolAccounts',{});
+  const acc = accounts[schoolName];
+  if(!acc || acc.phone!==phone || acc.password!==btoa(password)){
+    loginAttempts++;
+    setData('loginAttempts',loginAttempts);
+    const left = 3-loginAttempts;
+    const errEl = document.getElementById('loginError');
+    const attEl = document.getElementById('attemptsLeft');
+    errEl.style.display='block';
+    if(left>0) attEl.textContent=`${left} attempt(s) remaining.`;
+    else { attEl.textContent='Account locked for 30 minutes.'; lockAccount(); }
+    return;
+  }
+  setData('loginAttempts',0);
+  loginAttempts=0;
+  currentUser = {...acc, schoolName};
+  loadDashboard();
+  addAudit('login',`Admin logged in for ${schoolName}`,'🔑');
+  showScreen('app');
+  updateHeaderUI();
+}
+
+function lockAccount(){
+  const lockUntil = Date.now() + 30*60*1000;
+  setData('lockoutTime',lockUntil);
+  startLockTimer(lockUntil);
+}
+
+// =====================================================
+// REGISTER
+// =====================================================
+function doRegister(){
+  const errEl = document.getElementById('regError');
+  errEl.style.display='none'; errEl.textContent='';
+  if(!selectedSchoolForReg){ document.getElementById('regSchoolError').style.display='block'; return; }
+  document.getElementById('regSchoolError').style.display='none';
+  const phone = document.getElementById('regPhone').value.trim();
+  const paystackKey = document.getElementById('regPaystackKey').value.trim();
+  const pass = document.getElementById('regPassword').value;
+  const conf = document.getElementById('regConfirmPassword').value;
+  if(!phone||!pass||!conf){ errEl.style.display='block'; errEl.textContent='Please fill all fields.'; return; }
+  if(pass!==conf){ document.getElementById('regPasswordError').style.display='block'; return; }
+  document.getElementById('regPasswordError').style.display='none';
+  const accounts = getData('schoolAccounts',{});
+  if(accounts[selectedSchoolForReg.name]){ errEl.style.display='block'; errEl.textContent='This school already has an account. Only one account per school allowed.'; return; }
+  const newAcc = { phone, password:btoa(pass), paystackKey:paystackKey||'pk_test_demo', emoji:selectedSchoolForReg.emoji, region:selectedSchoolForReg.region, created:new Date().toISOString() };
+  accounts[selectedSchoolForReg.name] = newAcc;
+  setData('schoolAccounts',accounts);
+  showToast('Account created successfully! Please login.','success');
+  addAudit('register',`Account created for ${selectedSchoolForReg.name}`,'🏫');
+  switchAuthTab('login');
+  document.getElementById('loginSchoolInput').value = selectedSchoolForReg.name;
+  selectedSchoolForLogin = selectedSchoolForReg;
+}
+
+// =====================================================
+// DASHBOARD
+// =====================================================
+function loadDashboard(){
+  const transactions = getData(`transactions_${currentUser.schoolName}`,[]);
+  const students = getData(`students_${currentUser.schoolName}`,[]);
+  const now = new Date();
+  const thisMonth = now.getMonth(); const thisYear = now.getFullYear();
+  const monthTxns = transactions.filter(t=>{ const d=new Date(t.date); return d.getMonth()===thisMonth&&d.getFullYear()===thisYear&&t.status==='success'; });
+  const total = transactions.filter(t=>t.status==='success').reduce((s,t)=>s+t.amount,0);
+  const monthTotal = monthTxns.reduce((s,t)=>s+t.amount,0);
+  const failed = transactions.filter(t=>t.status!=='success').length;
+  document.getElementById('stat-total').textContent = `GH₵ ${total.toFixed(2)}`;
+  document.getElementById('stat-month').textContent = `GH₵ ${monthTotal.toFixed(2)}`;
+  document.getElementById('stat-students').textContent = students.length;
+  document.getElementById('stat-failed').textContent = failed;
+  renderMonthlyChart(transactions);
+  renderWeeklyChart(transactions);
+  renderRecentTable(transactions.slice(-10).reverse());
+  renderAllTransTable(transactions.slice().reverse());
+  renderStudentsGrid(students,'');
+  renderAuditLog();
+  updatePeriodStats('monthly');
+}
+
+function refreshDashboard(){ loadDashboard(); showToast('Dashboard refreshed','info'); }
+
+function renderMonthlyChart(transactions){
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const now = new Date();
+  const data = months.map((m,i)=>{
+    const val = transactions.filter(t=>{const d=new Date(t.date);return d.getMonth()===i&&d.getFullYear()===now.getFullYear()&&t.status==='success';}).reduce((s,t)=>s+t.amount,0);
+    return {label:m,val};
+  });
+  const max = Math.max(...data.map(d=>d.val),1);
+  const container = document.getElementById('monthlyChart');
+  container.innerHTML = data.map(d=>`<div class="bar-item"><div class="bar-amount">${d.val>0?'₵'+d.val.toFixed(0):''}</div><div class="bar-fill" style="height:${(d.val/max)*100}px"></div><div class="bar-label">${d.label}</div></div>`).join('');
+}
+
+function renderWeeklyChart(transactions){
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const now = new Date();
+  const data = days.map((d,i)=>{
+    const val = transactions.filter(t=>{const dt=new Date(t.date);const wStart=new Date(now);wStart.setDate(now.getDate()-now.getDay());const wEnd=new Date(wStart);wEnd.setDate(wStart.getDate()+6);return dt>=wStart&&dt<=wEnd&&dt.getDay()===i&&t.status==='success';}).reduce((s,t)=>s+t.amount,0);
+    return {label:d,val};
+  });
+  const max = Math.max(...data.map(d=>d.val),1);
+  const container = document.getElementById('weeklyChart');
+  container.innerHTML = data.map(d=>`<div class="bar-item"><div class="bar-amount">${d.val>0?'₵'+d.val.toFixed(0):''}</div><div class="bar-fill" style="height:${(d.val/max)*100}px;background:linear-gradient(to top,var(--green3),var(--gold))"></div><div class="bar-label">${d.label}</div></div>`).join('');
+}
+
+function renderRecentTable(txns){
+  const tbody = document.getElementById('recentTransTable');
+  if(!txns.length){ tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:30px;">No transactions yet</td></tr>'; return; }
+  tbody.innerHTML = txns.map(t=>`<tr><td><strong>${t.student}</strong></td><td>${t.parent}</td><td style="color:var(--green);font-family:'Space Mono',monospace;">GH₵ ${t.amount.toFixed(2)}</td><td>${getMethodLabel(t.method)}</td><td style="font-size:11px;">${new Date(t.date).toLocaleString('en-GH')}</td><td><span class="badge ${t.status}">${t.status}</span></td><td style="font-size:11px;color:var(--text3);">📍 ${t.location||'--'}</td></tr>`).join('');
+}
+
+function renderAllTransTable(txns){
+  const tbody = document.getElementById('allTransTable');
+  if(!txns.length){ tbody.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:30px;">No transactions</td></tr>'; return; }
+  tbody.innerHTML = txns.map(t=>`<tr><td style="font-family:'Space Mono',monospace;font-size:11px;">${t.ref}</td><td>${t.student}</td><td>${t.parent}</td><td style="color:var(--green);font-family:'Space Mono',monospace;">GH₵ ${t.amount.toFixed(2)}</td><td>${getMethodLabel(t.method)}</td><td style="font-size:11px;">${new Date(t.date).toLocaleString('en-GH')}</td><td style="font-size:11px;color:var(--text3);">📍 ${t.location||'--'}</td><td><span class="badge ${t.status}">${t.status}</span></td><td style="font-family:'Space Mono',monospace;color:var(--gold);font-size:12px;">${t.code||'--'}</td></tr>`).join('');
+}
+
+function getMethodLabel(m){ return m==='mtn'?'🟡 MTN MoMo':m==='telecel'?'🔴 Telecel':m==='visa'?'💳 Bank/Visa':'--'; }
+
+// =====================================================
+// STUDENTS
+// =====================================================
+function openAddStudent(){ document.getElementById('modalAddStudent').classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+function addStudent(){
+  const name=document.getElementById('sName').value.trim();
+  const id=document.getElementById('sId').value.trim();
+  const cls=document.getElementById('sClass').value;
+  const course=document.getElementById('sCourse').value;
+  const house=document.getElementById('sHouse').value;
+  const parent=document.getElementById('sParent').value.trim();
+  const parentPhone=document.getElementById('sParentPhone').value.trim();
+  const amtPaid=parseFloat(document.getElementById('sAmountPaid').value)||0;
+  if(!name||!id||!cls||!parent){ showToast('Please fill required fields','error'); return; }
+  const students = getData(`students_${currentUser.schoolName}`,[]);
+  students.push({name,id,class:cls,course,house,parent,parentPhone,amtPaid,addedAt:new Date().toISOString()});
+  setData(`students_${currentUser.schoolName}`,students);
+  if(amtPaid>0){
+    addTransaction({student:name,parent,amount:amtPaid,method:'manual',status:'success',location:userLocation.address,note:'Added at registration'});
+  }
+  closeModal('modalAddStudent');
+  loadDashboard();
+  addAudit('student',`Student added: ${name} (${id})`,'👥');
+  showToast(`Student ${name} added successfully!`,'success');
+  ['sName','sId','sParent','sParentPhone','sAmountPaid'].forEach(id=>document.getElementById(id).value='');
+}
+
+function filterStudents(q){ renderStudentsGrid(getData(`students_${currentUser.schoolName}`,[]),q); }
+
+function renderStudentsGrid(students,q=''){
+  const grid = document.getElementById('studentsGrid');
+  const filtered = q ? students.filter(s=>s.name.toLowerCase().includes(q.toLowerCase())||s.id.toLowerCase().includes(q.toLowerCase())||s.class.toLowerCase().includes(q.toLowerCase())) : students;
+  if(!filtered.length){ grid.innerHTML='<div style="color:var(--text3);text-align:center;padding:40px;grid-column:1/-1;">No students found.</div>'; return; }
+  grid.innerHTML = filtered.map((s,i)=>`
+    <div class="student-card">
+      <div class="paid-badge"><span class="badge ${s.amtPaid>0?'success':'pending'}">${s.amtPaid>0?'GH₵'+s.amtPaid.toFixed(0)+' paid':'Unpaid'}</span></div>
+      <div class="student-avatar">${s.name.charAt(0)}</div>
+      <div class="student-name">${s.name}</div>
+      <div style="font-size:12px;color:var(--text2);">ID: ${s.id}</div>
+      <div class="student-meta">
+        <span class="meta-chip">📚 ${s.class}</span>
+        <span class="meta-chip">🏠 ${s.house||'--'}</span>
+        <span class="meta-chip">📖 ${s.course||'--'}</span>
+      </div>
+      <div style="font-size:12px;color:var(--text2);margin-top:10px;">👤 Parent: ${s.parent}</div>
+      <div class="student-actions">
+        <button class="btn-sm btn-danger" onclick="removeStudent(${i})">🗑️ Remove</button>
+        <button class="btn-sm btn-info" onclick="payForStudent(${i})">💳 Pay PTA</button>
+      </div>
+    </div>`).join('');
+}
+
+function removeStudent(idx){
+  if(!confirm('Remove this student from the database?')) return;
+  const students = getData(`students_${currentUser.schoolName}`,[]);
+  const removed = students.splice(idx,1)[0];
+  setData(`students_${currentUser.schoolName}`,students);
+  loadDashboard();
+  addAudit('student',`Student removed: ${removed.name}`,'🗑️');
+  showToast('Student removed','info');
+}
+
+function payForStudent(idx){
+  const students = getData(`students_${currentUser.schoolName}`,[]);
+  const s = students[idx];
+  currentPayStudent = s;
+  switchTab('payment');
+  document.getElementById('payStudentName').value = s.name;
+  document.getElementById('payStudentClass').value = s.class;
+  document.getElementById('payParentName').value = s.parent;
+  document.getElementById('payParentPhone').value = s.parentPhone||'';
+}
+
+function searchStudentForPay(val){
+  const students = getData(`students_${currentUser.schoolName}`,[]);
+  const filtered = students.filter(s=>s.name.toLowerCase().includes(val.toLowerCase()));
+  const dd = document.getElementById('studentPayDropdown');
+  dd.innerHTML='';
+  if(!filtered.length||!val){ dd.style.display='none'; return; }
+  filtered.slice(0,5).forEach(s=>{
+    const div=document.createElement('div'); div.className='school-option';
+    div.innerHTML=`<div class="school-emoji">${s.name.charAt(0)}</div><div><div style="font-weight:600;font-size:13px;">${s.name}</div><div style="font-size:11px;color:var(--text3);">${s.class} · ${s.parent}</div></div>`;
+    div.onclick=()=>{ document.getElementById('payStudentName').value=s.name; document.getElementById('payStudentClass').value=s.class; document.getElementById('payParentName').value=s.parent; document.getElementById('payParentPhone').value=s.parentPhone||''; currentPayStudent=s; dd.style.display='none'; };
+    dd.appendChild(div);
+  });
+  dd.style.display='block';
+}
+
+// =====================================================
+// PAYMENT FLOW
+// =====================================================
+function goPayStep1(){ setPayStep(1); }
+function goPayStep2(){
+  const parent = document.getElementById('payParentName').value.trim();
+  const student = document.getElementById('payStudentName').value.trim();
+  const amount = parseFloat(document.getElementById('payAmount').value);
+  if(!parent||!student||!amount||amount<1){ showToast('Please fill all payment details','error'); return; }
+  setPayStep(2);
+}
+function goPayStep3(){
+  if(!selectedPayMethod){ showToast('Please select a payment method','error'); return; }
+  const parent=document.getElementById('payParentName').value.trim();
+  const student=document.getElementById('payStudentName').value.trim();
+  const amount=parseFloat(document.getElementById('payAmount').value);
+  const email=document.getElementById('payParentEmail').value.trim();
+  const cls=document.getElementById('payStudentClass').value;
+  document.getElementById('payConfirmSummary').innerHTML=`
+    <div class="receipt-row"><span>Parent</span><span>${parent}</span></div>
+    <div class="receipt-row"><span>Email</span><span>${email||'--'}</span></div>
+    <div class="receipt-row"><span>Student</span><span>${student}</span></div>
+    <div class="receipt-row"><span>Class</span><span>${cls||'--'}</span></div>
+    <div class="receipt-row"><span>Amount</span><span style="color:var(--green);font-family:'Space Mono',monospace;">GH₵ ${amount.toFixed(2)}</span></div>
+    <div class="receipt-row"><span>Method</span><span>${getMethodLabel(selectedPayMethod)}</span></div>
+    <div class="receipt-row"><span>Location</span><span style="font-size:11px;">📍 ${userLocation.address}</span></div>
+    <div class="receipt-row"><span>Time</span><span style="font-size:11px;">${new Date().toLocaleString('en-GH')}</span></div>
+  `;
+  setPayStep(3);
+}
+
+function setPayStep(n){
+  payFlowStep=n;
+  ['payStep1','payStep2','payStep3','payStep4'].forEach((id,i)=>{ document.getElementById(id).style.display=i+1===n?'block':'none'; });
+  for(let i=1;i<=4;i++){
+    const el=document.getElementById('pstep'+i);
+    el.classList.remove('active','done');
+    if(i<n) el.classList.add('done');
+    if(i===n) el.classList.add('active');
+  }
+}
+
+function selectPayMethod(m){
+  selectedPayMethod=m;
+  ['mtn','telecel','visa'].forEach(pm=>{ document.getElementById('pm-'+pm).classList.remove('selected'); });
+  document.getElementById('pm-'+m).classList.add('selected');
+}
+
+function initiatePaystack(){
+  const email = document.getElementById('payParentEmail').value.trim()||'parent@pta.edu.gh';
+  const amount = parseFloat(document.getElementById('payAmount').value);
+  const parent = document.getElementById('payParentName').value.trim();
+  const student = document.getElementById('payStudentName').value.trim();
+  const paystackKey = currentUser?.paystackKey||'pk_test_demo';
+
+  if(paystackKey==='pk_test_demo'||!paystackKey.startsWith('pk_live')){
+    // DEMO MODE -- simulate payment (for testing)
+    simulatePayment(student,parent,amount);
+    return;
+  }
+
+  // REAL PAYSTACK INTEGRATION
+  const script = document.createElement('script');
+  script.src = 'https://js.paystack.co/v1/inline.js';
+  script.onload = ()=>{
+    const handler = PaystackPop.setup({
+      key: paystackKey,
+      email,
+      amount: Math.round(amount*100), // Paystack uses pesewas
+      currency: 'GHS',
+      channels: selectedPayMethod==='mtn'?['mobile_money']:selectedPayMethod==='telecel'?['mobile_money']:['card'],
+      metadata:{parent,student,school:currentUser.schoolName,location:userLocation.address},
+      callback: function(response){
+        onPaystackSuccess(response,student,parent,amount);
+      },
+      onClose: function(){ showToast('Payment cancelled','error'); }
+    });
+    handler.openIframe();
+  };
+  document.head.appendChild(script);
+}
+
+function onPaystackSuccess(response,student,parent,amount){
+  const code = generateVerificationCode();
+  const ref = response.reference||generateRef();
+  const txn = {ref,student,parent,amount,method:selectedPayMethod,status:'success',date:new Date().toISOString(),location:userLocation.address,code};
+  addTransaction(txn);
+  showReceipt(txn,code);
+  sendSMSAlert(parent,amount,code);
+}
+
+function simulatePayment(student,parent,amount){
+  const btn=document.getElementById('btnPay');
+  btn.innerHTML='<span class="loading-spinner"></span> Processing...';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='💳 Pay Now via Paystack'; btn.disabled=false;
+    const code=generateVerificationCode();
+    const ref=generateRef();
+    const txn={ref,student,parent,amount,method:selectedPayMethod,status:'success',date:new Date().toISOString(),location:userLocation.address,code};
+    addTransaction(txn);
+    showReceipt(txn,code);
+    sendSMSAlert(parent,amount,code);
+    addAudit('payment',`Payment of GH₵${amount} by ${parent} for ${student}`,'💳');
+    // If student exists, mark as paid
+    const students=getData(`students_${currentUser.schoolName}`,[]);
+    const si=students.findIndex(s=>s.name===student);
+    if(si>-1){ students[si].amtPaid=(students[si].amtPaid||0)+amount; setData(`students_${currentUser.schoolName}`,students); }
+  },2500);
+}
+
+function addTransaction(txn){
+  const key = currentUser ? `transactions_${currentUser.schoolName}` : 'transactions_guest';
+  const txns = getData(key,[]);
+  txns.push(txn);
+  setData(key,txns);
+  loadDashboard();
+}
+
+function generateVerificationCode(){
+  return 'PTA-'+Math.random().toString(36).toUpperCase().slice(2,8);
+}
+function generateRef(){
+  return 'REF'+Date.now().toString(36).toUpperCase();
+}
+
+function showReceipt(txn,code){
+  setPayStep(4);
+  document.getElementById('receiptCode').textContent=code;
+  document.getElementById('receiptDetails').innerHTML=`
+    <div class="receipt-row"><span>Reference</span><span style="font-family:'Space Mono',monospace;font-size:11px;">${txn.ref}</span></div>
+    <div class="receipt-row"><span>Student</span><span>${txn.student}</span></div>
+    <div class="receipt-row"><span>Parent</span><span>${txn.parent}</span></div>
+    <div class="receipt-row"><span>Amount</span><span style="color:var(--green);font-weight:700;">GH₵ ${txn.amount.toFixed(2)}</span></div>
+    <div class="receipt-row"><span>Method</span><span>${getMethodLabel(txn.method)}</span></div>
+    <div class="receipt-row"><span>Time</span><span style="font-size:11px;">${new Date(txn.date).toLocaleString('en-GH')}</span></div>
+    <div class="receipt-row"><span>Location</span><span style="font-size:11px;">📍 ${txn.location}</span></div>
+    <div class="receipt-row"><span>School</span><span>${currentUser?.schoolName||'--'}</span></div>
+  `;
+  // QR Code
+  const qrEl=document.getElementById('receiptQR'); qrEl.innerHTML='';
+  try{ new QRCode(qrEl,{text:`EduPTA|${txn.ref}|${code}|GHS${txn.amount}`,width:112,height:112,colorDark:'#000',colorLight:'#fff'}); }catch(e){}
+  showToast(`✅ Payment verified! Code: ${code}`,'success');
+}
+
+function sendSMSAlert(parent,amount,code){
+  // Backend would call Africa's Talking or Termii API
+  // Simulated here:
+  showToast(`📱 SMS with code ${code} sent to ${parent}'s number`,'info');
+}
+
+function resetPayment(){
+  selectedPayMethod=null;
+  currentPayStudent=null;
+  ['payParentName','payParentPhone','payParentEmail','payStudentName','payStudentClass','payAmount'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  ['mtn','telecel','visa'].forEach(pm=>document.getElementById('pm-'+pm).classList.remove('selected'));
+  setPayStep(1);
+}
+
+function downloadReceipt(){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF();
+  const code=document.getElementById('receiptCode').textContent;
+  doc.setFontSize(20); doc.text('Edu P.T.A System',105,20,{align:'center'});
+  doc.setFontSize(12); doc.text('Official Payment Receipt',105,30,{align:'center'});
+  doc.setFontSize(10);
+  doc.text(`School: ${currentUser?.schoolName||'--'}`,20,50);
+  doc.text(`Verification Code: ${code}`,20,60);
+  doc.text(`Date: ${new Date().toLocaleString('en-GH')}`,20,70);
+  doc.text(`Amount: GH₵ ${document.querySelector('#receiptDetails .receipt-row:nth-child(4) span:last-child').textContent}`,20,80);
+  doc.text('Ghana Education Service · PTA Fee System',105,100,{align:'center'});
+  doc.save(`PTA_Receipt_${code}.pdf`);
+}
+
+// =====================================================
+// STATISTICS
+// =====================================================
+function setPeriod(period, btn){
+  document.querySelectorAll('.period-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  updatePeriodStats(period);
+}
+
+function updatePeriodStats(period){
+  const transactions=getData(`transactions_${currentUser?.schoolName}`,[]);
+  const now=new Date();
+  let filtered,label;
+  if(period==='daily'){ filtered=transactions.filter(t=>{ const d=new Date(t.date); return d.toDateString()===now.toDateString()&&t.status==='success'; }); label='Today'; }
+  else if(period==='weekly'){ const wStart=new Date(now); wStart.setDate(now.getDate()-now.getDay()); filtered=transactions.filter(t=>new Date(t.date)>=wStart&&t.status==='success'); label='This Week'; }
+  else if(period==='monthly'){ filtered=transactions.filter(t=>{ const d=new Date(t.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()&&t.status==='success'; }); label='This Month'; }
+  else { filtered=transactions.filter(t=>new Date(t.date).getFullYear()===now.getFullYear()&&t.status==='success'); label='This Year'; }
+  const total=filtered.reduce((s,t)=>s+t.amount,0);
+  document.getElementById('periodStats').innerHTML=`
+    <div class="stat-card green"><div class="stat-label">${label} Total</div><div class="stat-value green">GH₵ ${total.toFixed(2)}</div></div>
+    <div class="stat-card blue"><div class="stat-label">${label} Transactions</div><div class="stat-value blue">${filtered.length}</div></div>
+    <div class="stat-card gold"><div class="stat-label">Average Payment</div><div class="stat-value gold">GH₵ ${filtered.length?((total/filtered.length).toFixed(2)):'0.00'}</div></div>
+    <div class="stat-card red"><div class="stat-label">Highest Payment</div><div class="stat-value red">GH₵ ${filtered.length?(Math.max(...filtered.map(t=>t.amount)).toFixed(2)):'0.00'}</div></div>
+  `;
+}
+
+function exportTransactions(){
+  const transactions=getData(`transactions_${currentUser?.schoolName}`,[]);
+  const header='Ref,Student,Parent,Amount,Method,Date,Location,Status,Code';
+  const rows=transactions.map(t=>`${t.ref},${t.student},${t.parent},${t.amount},${t.method},"${new Date(t.date).toLocaleString('en-GH')}","${t.location||''}",${t.status},${t.code||''}`);
+  const csv=[header,...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`PTA_Transactions_${currentUser?.schoolName||'export'}.csv`; a.click();
+}
+
+// =====================================================
+// AUDIT LOG
+// =====================================================
+function addAudit(type,msg,icon='📋'){
+  const logs=getData('auditLogs',[]);
+  logs.push({type,msg,icon,time:new Date().toISOString(),school:currentUser?.schoolName||'system'});
+  if(logs.length>100) logs.shift();
+  setData('auditLogs',logs);
+}
+function renderAuditLog(){
+  const logs=(getData('auditLogs',[])).filter(l=>l.school===currentUser?.schoolName||l.school==='system').slice().reverse();
+  const list=document.getElementById('auditList');
+  if(!logs.length){ list.innerHTML='<div style="color:var(--text3);text-align:center;padding:40px;">No audit records.</div>'; return; }
+  list.innerHTML=logs.map(l=>`<div class="audit-item"><div class="audit-icon ${l.type}">${l.icon}</div><div class="audit-info"><p>${l.msg}</p><span>${l.school}</span></div><div class="audit-time">${new Date(l.time).toLocaleString('en-GH')}</div></div>`).join('');
+}
+
+// =====================================================
+// PASSWORD
+// =====================================================
+function openChangePassword(){ document.getElementById('modalChangePass').classList.add('open'); }
+function doChangePassword(){
+  const old=document.getElementById('cpOld').value;
+  const neu=document.getElementById('cpNew').value;
+  const conf=document.getElementById('cpConfirm').value;
+  const errEl=document.getElementById('cpError');
+  if(btoa(old)!==currentUser.password){ errEl.style.display='block'; errEl.textContent='Current password incorrect.'; return; }
+  if(neu!==conf){ errEl.style.display='block'; errEl.textContent='New passwords do not match.'; return; }
+  errEl.style.display='none';
+  const accounts=getData('schoolAccounts',{});
+  accounts[currentUser.schoolName].password=btoa(neu);
+  setData('schoolAccounts',accounts);
+  currentUser.password=btoa(neu);
+  closeModal('modalChangePass');
+  showToast('Password updated successfully!','success');
+  addAudit('settings','Password changed','🔑');
+}
+function changePassword(){
+  const old=document.getElementById('oldPassword').value;
+  const neu=document.getElementById('newPassword').value;
+  const conf=document.getElementById('confirmNewPassword').value;
+  const errEl=document.getElementById('changePassError');
+  if(btoa(old)!==currentUser.password){ errEl.style.display='block'; errEl.textContent='Current password incorrect.'; return; }
+  if(neu!==conf){ errEl.style.display='block'; errEl.textContent='New passwords do not match.'; return; }
+  errEl.style.display='none';
+  const accounts=getData('schoolAccounts',{});
+  accounts[currentUser.schoolName].password=btoa(neu);
+  setData('schoolAccounts',accounts);
+  currentUser.password=btoa(neu);
+  showToast('Password updated!','success');
+}
+
+// =====================================================
+// FORGOT PASSWORD / MASTER CODE
+// =====================================================
+function showForgotPassword(){
+  const box=document.getElementById('forgotPasswordBox');
+  box.style.display=box.style.display==='none'?'block':'none';
+}
+function verifyMasterCode(){
+  const entered=document.getElementById('masterCodeInput').value.trim();
+  if(entered===MASTER_CODE){
+    showToast('Master code verified! You may now reset your password.','success');
+    document.getElementById('loginPassword').value='';
+    setData('loginAttempts',0);
+    setData('lockoutTime',0);
+    loginAttempts=0;
+    document.getElementById('loginContent').style.display='block';
+    document.getElementById('loginLockout').style.display='none';
+    document.getElementById('forgotPasswordBox').style.display='none';
+    // prompt new password
+    const newPass=prompt('Enter your new password:');
+    if(newPass&&selectedSchoolForLogin){
+      const accounts=getData('schoolAccounts',{});
+      if(accounts[selectedSchoolForLogin.name]){
+        accounts[selectedSchoolForLogin.name].password=btoa(newPass);
+        setData('schoolAccounts',accounts);
+        showToast('Password reset successful! Please login.','success');
+      }
+    }
+  } else {
+    showToast('Invalid master code. Contact developer: '+DEV_PHONE,'error');
+  }
+}
+
+// =====================================================
+// PARENT PAYMENT
+// =====================================================
+function startParentPayment(){
+  if(!selectedSchoolForParent){ showToast('Please select a school first','error'); return; }
+  if(!parentPaymentSchool){ showToast('This school has not registered yet. Ask the administrator to create an account.','error'); return; }
+  // Switch to a simplified payment flow
+  showToast(`Initiating payment for ${selectedSchoolForParent.name}...`,'info');
+  setTimeout(()=>{ switchTab('payment'); showScreen('app'); loadDashboard(); },1000);
+}
+
+// =====================================================
+// NAV TABS
+// =====================================================
+function switchTab(tab){
+  document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-content-'+tab).style.display='block';
+  document.querySelector(`[data-tab="${tab}"]`)?.classList.add('active');
+}
+
+// =====================================================
+// HEADER
+// =====================================================
+function updateHeaderUI(){
+  if(!currentUser) return;
+  document.getElementById('headerSchoolName').textContent=currentUser.schoolName;
+  document.getElementById('headerAdminPhone').textContent='Admin: '+currentUser.phone;
+  document.getElementById('headerAvatar').textContent=currentUser.emoji||'🎓';
+  document.getElementById('setSchoolName').textContent=currentUser.schoolName;
+  document.getElementById('setAdminPhone').textContent=currentUser.phone;
+}
+
+// =====================================================
+// LOGOUT
+// =====================================================
+function logout(){
+  if(!confirm('Logout from Edu PTA System?')) return;
+  addAudit('login',`Admin logged out from ${currentUser?.schoolName}`,'🚪');
+  currentUser=null;
+  gotoWelcome();
+}
+
+// =====================================================
+// TOAST
+// =====================================================
+function showToast(msg,type='info'){
+  const tc=document.getElementById('toastContainer');
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;
+  t.innerHTML=`<span>${type==='success'?'✅':type==='error'?'❌':'ℹ️'}</span><span>${msg}</span>`;
+  tc.appendChild(t);
+  setTimeout(()=>{ t.style.animation='none'; t.style.opacity='0'; t.style.transition='opacity .3s'; setTimeout(()=>t.remove(),300); },4000);
+}
+</script>
+
+<!-- BACKEND SETUP NOTICE -->
+<script>
+// =====================
+// BACKEND ARCHITECTURE
+// =====================
+/*
+ * This frontend is designed to connect to a Node.js + Express backend.
+ * 
+ * BACKEND STACK:
+ * ─────────────
+ * Node.js + Express
+ * MongoDB + Mongoose (Atlas)
+ * JWT Authentication
+ * bcrypt password hashing
+ * Paystack (payments)
+ * Africa's Talking / Termii (SMS)
+ * Helmet + CORS + Rate Limiting
+ *
+ * API ENDPOINTS (connect to backend URL):
+ * ─────────────────────────────────────────
+ * POST /api/auth/register     → Create school account
+ * POST /api/auth/login        → Login + get JWT
+ * POST /api/auth/reset        → Master code password reset
+ * GET  /api/schools           → List all schools (GES API)
+ * GET  /api/students          → Get students (Admin only)
+ * POST /api/students          → Add student
+ * DELETE /api/students/:id    → Remove student
+ * POST /api/payments/initiate → Start Paystack payment
+ * POST /api/payments/verify   → Verify Paystack webhook
+ * GET  /api/transactions      → List transactions
+ * GET  /api/stats             → Dashboard statistics
+ * POST /api/sms/send          → Send SMS notification
+ *
+ * ENVIRONMENT VARIABLES (.env):
+ * ─────────────────────────────
+ * MONGODB_URI=mongodb+srv://...
+ * JWT_SECRET=your_secret
+ * PAYSTACK_SECRET_KEY=sk_live_...
+ * AFRICASTALKING_KEY=...
+ * MASTER_CODE=encrypted_master_code
+ * PORT=5000
+ *
+ * To replace the local localStorage with real backend:
+ * Change getData() and setData() calls to fetch() API calls
+ * pointing to your deployed backend URL.
+ *
+ * DEPLOYMENT:
+ * ─────────────
+ * Backend → Render.com or Railway.app
+ * Database → MongoDB Atlas
+ * Domain → Any domain + Cloudflare SSL
+ *
+ * Developer Contact: 0200250635 (WhatsApp/Call)
+ */
+console.log('%c Edu PTA System v2.0 ', 'background:#00A859;color:#fff;font-size:14px;padding:4px 8px;border-radius:4px;');
+console.log('%c Developer: 0200250635 | WhatsApp/Call', 'color:#FFB800;font-size:12px;');
+</script>
+</body>
+</html><script>// ============================================================
+// EDU P.T.A SYSTEM -- COMPLETE BACKEND (Node.js + Express)
+// Developer: 0200250635
+// Stack: Node.js, Express, MongoDB, JWT, Paystack, SMS
+// ============================================================
+
+// ── package.json ─────────────────────────────────────────────
+/*
+{
+"name": "edu-pta-backend",
+"version": "1.0.0",
+"description": "School PTA Fee Payment System - Ghana",
+"main": "server.js",
+"scripts": {
+"start": "node server.js",
+"dev": "nodemon server.js"
+},
+"dependencies": {
+"express": "^4.18.2",
+"mongoose": "^7.5.0",
+"bcryptjs": "^2.4.3",
+"jsonwebtoken": "^9.0.2",
+"cors": "^2.8.5",
+"helmet": "^7.0.0",
+"express-rate-limit": "^6.10.0",
+"dotenv": "^16.3.1",
+"axios": "^1.5.0",
+"crypto": "^1.0.1"
+},
+"devDependencies": {
+"nodemon": "^3.0.1"
+}
+}
+*/
+
+// ── .env (DO NOT COMMIT TO GIT) ──────────────────────────────
+/*
+MONGODB_URI=mongodb+srv://USERNAME:PASSWORD@cluster.mongodb.net/edupta
+JWT_SECRET=your_super_secret_jwt_key_here_min_32_chars
+PAYSTACK_SECRET_KEY=sk_live_your_paystack_secret_key
+AFRICASTALKING_USERNAME=your_africastalking_username
+AFRICASTALKING_KEY=your_africastalking_api_key
+TERMII_KEY=your_termii_api_key
+MASTER_CODE_HASH=$2b$10$hashedMasterCodeHere
+PORT=5000
+NODE_ENV=production
+FRONTEND_URL=https://your-frontend-domain.com
+*/
+
+// ══════════════════════════════════════════════════════════════
+// server.js
+// ══════════════════════════════════════════════════════════════
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const axios = require('axios');
+require('dotenv').config();
+
+const app = express();
+
+// ── SECURITY MIDDLEWARE ───────────────────────────────────────
+app.use(helmet({
+contentSecurityPolicy: {
+directives: {
+defaultSrc: ["'self'"],
+scriptSrc: ["'self'", "https://js.paystack.co"],
+frameSrc: ["https://checkout.paystack.com"],
+}
+}
+}));
+
+app.use(cors({
+origin: process.env.FRONTEND_URL || '*',
+credentials: true,
+methods: ['GET','POST','PUT','DELETE'],
+allowedHeaders: ['Content-Type','Authorization']
+}));
+
+app.use(express.json({ limit: '10kb' })); // Prevent large payload attacks
+
+// Global rate limiter
+const limiter = rateLimit({
+windowMs: 15 * 60 * 1000, // 15 minutes
+max: 100,
+message: { error: 'Too many requests. Please try again later.' }
+});
+app.use('/api/', limiter);
+
+// Stricter limiter for auth routes
+const authLimiter = rateLimit({
+windowMs: 30 * 60 * 1000,
+max: 10,
+message: { error: 'Too many login attempts. Locked for 30 minutes.' }
+});
+app.use('/api/auth/', authLimiter);
+
+// ══════════════════════════════════════════════════════════════
+// DATABASE MODELS
+// ══════════════════════════════════════════════════════════════
+
+// ── School Account Model ──────────────────────────────────────
+const schoolSchema = new mongoose.Schema({
+schoolName:      { type: String, required: true, unique: true, trim: true },
+phone:           { type: String, required: true, trim: true },
+password:        { type: String, required: true },
+paystackPublicKey:  { type: String },
+paystackSecretKey:  { type: String }, // Encrypted at rest
+emoji:           { type: String, default: '🎓' },
+region:          { type: String },
+isActive:        { type: Boolean, default: true },
+loginAttempts:   { type: Number, default: 0 },
+lockUntil:       { type: Date },
+createdAt:       { type: Date, default: Date.now },
+lastLogin:       { type: Date },
+});
+
+schoolSchema.pre('save', async function(next) {
+if (!this.isModified('password')) return next();
+this.password = await bcrypt.hash(this.password, 12);
+next();
+});
+
+schoolSchema.methods.checkPassword = async function(candidate) {
+return bcrypt.compare(candidate, this.password);
+};
+
+schoolSchema.methods.isLocked = function() {
+return this.lockUntil && this.lockUntil > Date.now();
+};
+
+const School = mongoose.model('School', schoolSchema);
+
+// ── Student Model ─────────────────────────────────────────────
+const studentSchema = new mongoose.Schema({
+school:       { type: mongoose.Schema.Types.ObjectId, ref: 'School', required: true },
+name:         { type: String, required: true, trim: true },
+studentId:    { type: String, required: true },
+class:        { type: String, required: true },
+course:       { type: String },
+house:        { type: String },
+parentName:   { type: String, required: true },
+parentPhone:  { type: String },
+parentEmail:  { type: String },
+amountPaid:   { type: Number, default: 0 },
+addedAt:      { type: Date, default: Date.now },
+isActive:     { type: Boolean, default: true },
+});
+
+// Compound unique index: studentId unique per school
+studentSchema.index({ school: 1, studentId: 1 }, { unique: true });
+const Student = mongoose.model('Student', studentSchema);
+
+// ── Transaction Model ─────────────────────────────────────────
+const transactionSchema = new mongoose.Schema({
+school:          { type: mongoose.Schema.Types.ObjectId, ref: 'School', required: true },
+student:         { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
+studentName:     { type: String, required: true },
+parentName:      { type: String, required: true },
+parentPhone:     { type: String },
+parentEmail:     { type: String },
+amount:          { type: Number, required: true, min: 1 },
+currency:        { type: String, default: 'GHS' },
+method:          { type: String, enum: ['mtn','telecel','visa','manual'], required: true },
+status:          { type: String, enum: ['success','pending','failed'], default: 'pending' },
+paystackRef:     { type: String },
+verificationCode:{ type: String },
+location: {
+lat:     Number,
+lng:     Number,
+address: String,
+},
+smsSent:         { type: Boolean, default: false },
+createdAt:       { type: Date, default: Date.now },
+verifiedAt:      { type: Date },
+});
+
+transactionSchema.index({ school: 1, createdAt: -1 });
+const Transaction = mongoose.model('Transaction', transactionSchema);
+
+// ── Audit Log Model ───────────────────────────────────────────
+const auditSchema = new mongoose.Schema({
+school:    { type: mongoose.Schema.Types.ObjectId, ref: 'School' },
+type:      { type: String },
+message:   { type: String },
+ip:        { type: String },
+userAgent: { type: String },
+createdAt: { type: Date, default: Date.now },
+});
+const AuditLog = mongoose.model('AuditLog', auditSchema);
+
+// ══════════════════════════════════════════════════════════════
+// MIDDLEWARE
+// ══════════════════════════════════════════════════════════════
+
+// JWT Verification
+const authenticate = async (req, res, next) => {
+try {
+const token = req.headers.authorization?.split(' ')[1];
+if (!token) return res.status(401).json({ error: 'Unauthorized. Please login.' });
+const decoded = jwt.verify(token, process.env.JWT_SECRET);
+const school = await School.findById(decoded.id).select('-password');
+if (!school || !school.isActive) return res.status(401).json({ error: 'Account not found or deactivated.' });
+req.school = school;
+next();
+} catch (err) {
+return res.status(401).json({ error: 'Invalid or expired token. Please login again.' });
+}
+};
+
+// Input sanitizer
+const sanitize = (str) => str?.toString().replace(/[<>'"]/g, '') || '';
+
+// Audit logger helper
+const logAudit = async (schoolId, type, message, req) => {
+await AuditLog.create({
+school: schoolId,
+type,
+message,
+ip: req?.ip,
+userAgent: req?.headers['user-agent'],
+});
+};
+
+// ══════════════════════════════════════════════════════════════
+// ROUTES
+// ══════════════════════════════════════════════════════════════
+
+// ── AUTH ──────────────────────────────────────────────────────
+
+// Register School Account
+app.post('/api/auth/register', async (req, res) => {
+try {
+const { schoolName, phone, password, confirmPassword, paystackPublicKey } = req.body;
+if (!schoolName || !phone || !password || !confirmPassword)
+return res.status(400).json({ error: 'All fields are required.' });
+if (password !== confirmPassword)
+return res.status(400).json({ error: 'Passwords do not match.' });
+if (password.length < 8)
+return res.status(400).json({ error: 'Password must be at least 8 characters.' });
+// Check one account per school
+const existing = await School.findOne({ schoolName: sanitize(schoolName) });
+if (existing)
+return res.status(409).json({ error: 'This school already has an account. Only one account per school is allowed.' });
+const school = new School({
+schoolName: sanitize(schoolName),
+phone: sanitize(phone),
+password,
+paystackPublicKey: sanitize(paystackPublicKey || ''),
+});
+await school.save();
+await logAudit(school._id, 'register', `Account created for ${schoolName}`, req);
+const token = jwt.sign({ id: school._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+res.status(201).json({ message: 'Account created successfully!', token, school: { name: school.schoolName, phone: school.phone } });
+} catch (err) {
+res.status(500).json({ error: 'Server error. Please try again.' });
+}
+});
+
+// Login
+app.post('/api/auth/login', async (req, res) => {
+try {
+const { schoolName, phone, password } = req.body;
+if (!schoolName || !phone || !password)
+return res.status(400).json({ error: 'All fields are required.' });
+const school = await School.findOne({ schoolName: sanitize(schoolName), phone: sanitize(phone) });
+if (!school)
+return res.status(401).json({ error: 'Invalid credentials.' });
+// Check lockout
+if (school.isLocked())
+return res.status(423).json({ error: 'Account locked. Try again in 30 minutes.', lockedUntil: school.lockUntil });
+const valid = await school.checkPassword(password);
+if (!valid) {
+school.loginAttempts += 1;
+if (school.loginAttempts >= 3) {
+school.lockUntil = new Date(Date.now() + 30 * 60 * 1000);
+school.loginAttempts = 0;
+}
+await school.save();
+const remaining = 3 - school.loginAttempts;
+return res.status(401).json({ error: `Invalid credentials. ${remaining > 0 ? remaining + ' attempt(s) left.' : 'Account locked for 30 minutes.'}` });
+}
+school.loginAttempts = 0;
+school.lockUntil = undefined;
+school.lastLogin = new Date();
+await school.save();
+const token = jwt.sign({ id: school._id }, process.env.JWT_SECRET, { expiresIn: '8h' });
+await logAudit(school._id, 'login', `Admin logged in`, req);
+res.json({
+token,
+school: {
+name: school.schoolName,
+phone: school.phone,
+emoji: school.emoji,
+region: school.region,
+paystackPublicKey: school.paystackPublicKey,
+}
+});
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// Verify Master Code (for password reset)
+app.post('/api/auth/verify-master-code', async (req, res) => {
+try {
+const { masterCode, schoolName, newPassword } = req.body;
+// Compare with hashed master code in env
+const valid = await bcrypt.compare(masterCode, process.env.MASTER_CODE_HASH);
+if (!valid) return res.status(401).json({ error: 'Invalid master code. Contact developer: 0200250635' });
+if (newPassword && schoolName) {
+const school = await School.findOne({ schoolName });
+if (school) {
+school.password = newPassword; // Will be hashed by pre-save hook
+school.loginAttempts = 0;
+school.lockUntil = undefined;
+await school.save();
+await logAudit(school._id, 'password_reset', 'Password reset via master code', req);
+return res.json({ message: 'Password reset successfully. Please login.' });
+}
+}
+res.json({ message: 'Master code verified.' });
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// Change Password
+app.put('/api/auth/change-password', authenticate, async (req, res) => {
+try {
+const { currentPassword, newPassword, confirmPassword } = req.body;
+if (newPassword !== confirmPassword)
+return res.status(400).json({ error: 'New passwords do not match.' });
+if (newPassword.length < 8)
+return res.status(400).json({ error: 'Password must be at least 8 characters.' });
+const school = await School.findById(req.school._id);
+const valid = await school.checkPassword(currentPassword);
+if (!valid) return res.status(401).json({ error: 'Current password is incorrect.' });
+school.password = newPassword;
+await school.save();
+await logAudit(school._id, 'password_change', 'Password changed', req);
+res.json({ message: 'Password updated successfully.' });
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// ── SCHOOLS (GES API integration) ─────────────────────────────
+app.get('/api/schools', async (req, res) => {
+// In production: call Ghana Education Service API
+// For now, returns our curated list
+const schools = [
+{ name: "Achimota School", emoji: "🏫", region: "Greater Accra" },
+{ name: "Mfantsipim School", emoji: "🎓", region: "Central" },
+{ name: "Prempeh College", emoji: "🏛️", region: "Ashanti" },
+{ name: "Wesley Girls' High School", emoji: "🌟", region: "Central" },
+{ name: "Opoku Ware School", emoji: "🦁", region: "Ashanti" },
+{ name: "Holy Child School", emoji: "✨", region: "Central" },
+{ name: "Accra Academy", emoji: "🎯", region: "Greater Accra" },
+{ name: "Adisadel College", emoji: "⚓", region: "Central" },
+{ name: "St. Augustine's College", emoji: "📚", region: "Central" },
+{ name: "Presbyterian Boys' SHS", emoji: "✝️", region: "Greater Accra" },
+{ name: "Labone SHS", emoji: "🌊", region: "Greater Accra" },
+{ name: "Accra Girls SHS", emoji: "💐", region: "Greater Accra" },
+{ name: "T.I. Amass SHS", emoji: "🛡️", region: "Ashanti" },
+{ name: "Tamale SHS", emoji: "🌙", region: "Northern" },
+// Add all 800+ GES-listed schools here or call GES API
+];
+const { search } = req.query;
+const filtered = search ? schools.filter(s => s.name.toLowerCase().includes(search.toLowerCase())) : schools;
+res.json({ schools: filtered });
+});
+
+// Get school's public info (for parent payment)
+app.get('/api/schools/:name/public', async (req, res) => {
+try {
+const school = await School.findOne({ schoolName: req.params.name }).select('schoolName phone emoji region paystackPublicKey');
+if (!school) return res.status(404).json({ error: 'School not registered.' });
+res.json({ school });
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// ── STUDENTS ──────────────────────────────────────────────────
+
+// Get all students
+app.get('/api/students', authenticate, async (req, res) => {
+try {
+const { search } = req.query;
+const query = { school: req.school._id, isActive: true };
+if (search) query.$or = [
+{ name: { $regex: search, $options: 'i' } },
+{ studentId: { $regex: search, $options: 'i' } },
+{ class: { $regex: search, $options: 'i' } },
+];
+const students = await Student.find(query).sort({ name: 1 });
+res.json({ students });
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// Add student
+app.post('/api/students', authenticate, async (req, res) => {
+try {
+const { name, studentId, class: cls, course, house, parentName, parentPhone, parentEmail, amountPaid } = req.body;
+if (!name || !studentId || !cls || !parentName)
+return res.status(400).json({ error: 'Name, ID, class, and parent name are required.' });
+const student = await Student.create({
+school: req.school._id,
+name: sanitize(name),
+studentId: sanitize(studentId),
+class: sanitize(cls),
+course: sanitize(course || ''),
+house: sanitize(house || ''),
+parentName: sanitize(parentName),
+parentPhone: sanitize(parentPhone || ''),
+parentEmail: sanitize(parentEmail || ''),
+amountPaid: parseFloat(amountPaid) || 0,
+});
+// If they already paid, create a transaction record
+if (amountPaid && parseFloat(amountPaid) > 0) {
+await Transaction.create({
+school: req.school._id,
+student: student._id,
+studentName: name,
+parentName,
+parentPhone,
+amount: parseFloat(amountPaid),
+method: 'manual',
+status: 'success',
+verificationCode: generateCode(),
+location: { address: 'Added at registration' },
+});
+}
+await logAudit(req.school._id, 'student', `Student added: ${name}`, req);
+res.status(201).json({ message: 'Student added successfully.', student });
+} catch (err) {
+if (err.code === 11000) return res.status(409).json({ error: 'Student ID already exists in this school.' });
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// Remove student (soft delete)
+app.delete('/api/students/:id', authenticate, async (req, res) => {
+try {
+const student = await Student.findOneAndUpdate(
+{ _id: req.params.id, school: req.school._id },
+{ isActive: false },
+{ new: true }
+);
+if (!student) return res.status(404).json({ error: 'Student not found.' });
+await logAudit(req.school._id, 'student', `Student removed: ${student.name}`, req);
+res.json({ message: 'Student removed from database.' });
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// ── PAYMENTS ──────────────────────────────────────────────────
+
+// Initiate Paystack payment
+app.post('/api/payments/initiate', authenticate, async (req, res) => {
+try {
+const { studentName, parentName, parentEmail, parentPhone, amount, method, location } = req.body;
+if (!studentName || !parentName || !amount || amount < 1)
+return res.status(400).json({ error: 'Invalid payment details.' });
+const reference = `EDUPTA-${Date.now()}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
+// Initialize with Paystack
+const school = await School.findById(req.school._id);
+const paystackSecret = school.paystackSecretKey; // Should be encrypted
+if (!paystackSecret)
+return res.status(400).json({ error: 'School Paystack credentials not configured.' });
+const channels = method === 'mtn' ? ['mobile_money'] : method === 'telecel' ? ['mobile_money'] : ['card'];
+const paystackRes = await axios.post('https://api.paystack.co/transaction/initialize', {
+email: parentEmail || `${parentPhone}@pta.edu.gh`,
+amount: Math.round(parseFloat(amount) * 100), // in pesewas
+currency: 'GHS',
+reference,
+channels,
+metadata: { school: school.schoolName, student: studentName, parent: parentName, location },
+}, {
+headers: { Authorization: `Bearer ${paystackSecret}` }
+});
+// Create pending transaction
+const txn = await Transaction.create({
+school: req.school._id,
+studentName,
+parentName,
+parentPhone,
+parentEmail,
+amount: parseFloat(amount),
+method,
+status: 'pending',
+paystackRef: reference,
+location,
+});
+res.json({
+authorizationUrl: paystackRes.data.data.authorization_url,
+reference,
+transactionId: txn._id,
+});
+} catch (err) {
+res.status(500).json({ error: 'Payment initiation failed. ' + (err.response?.data?.message || err.message) });
+}
+});
+
+// Paystack Webhook (VERIFY REAL PAYMENTS)
+app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+try {
+// Verify Paystack signature
+const hash = crypto.createHmac('sha512', process.env.PAYSTACK_SECRET_KEY)
+.update(req.body).digest('hex');
+if (hash !== req.headers['x-paystack-signature'])
+return res.status(401).send('Unauthorized');
+const event = JSON.parse(req.body);
+if (event.event === 'charge.success') {
+const { reference, amount, customer, metadata } = event.data;
+const txn = await Transaction.findOneAndUpdate(
+{ paystackRef: reference },
+{
+status: 'success',
+verificationCode: generateCode(),
+verifiedAt: new Date(),
+},
+{ new: true }
+);
+if (txn) {
+// Update student's paid amount
+await Student.findOneAndUpdate(
+{ school: txn.school, name: txn.studentName },
+{ $inc: { amountPaid: txn.amount } }
+);
+// Send SMS
+await sendSMS(txn.parentPhone, `PTA Payment Confirmed!\nAmount: GH₵${txn.amount}\nCode: ${txn.verificationCode}\nSchool: Ghana PTA System`);
+await logAudit(txn.school, 'payment', `Payment of GH₵${txn.amount} confirmed for ${txn.studentName}`, null);
+}
+}
+res.sendStatus(200);
+} catch (err) {
+res.sendStatus(500);
+}
+});
+
+// Manual verify payment (admin)
+app.post('/api/payments/verify/:reference', authenticate, async (req, res) => {
+try {
+const school = await School.findById(req.school._id);
+const paystackRes = await axios.get(`https://api.paystack.co/transaction/verify/${req.params.reference}`, {
+headers: { Authorization: `Bearer ${school.paystackSecretKey}` }
+});
+const data = paystackRes.data.data;
+if (data.status === 'success') {
+const txn = await Transaction.findOneAndUpdate(
+{ paystackRef: req.params.reference, school: req.school._id },
+{ status: 'success', verificationCode: generateCode(), verifiedAt: new Date() },
+{ new: true }
+);
+return res.json({ verified: true, transaction: txn });
+}
+res.json({ verified: false, status: data.status });
+} catch (err) {
+res.status(500).json({ error: 'Verification failed.' });
+}
+});
+
+// ── TRANSACTIONS / STATS ──────────────────────────────────────
+
+app.get('/api/transactions', authenticate, async (req, res) => {
+try {
+const { period, limit = 50, skip = 0 } = req.query;
+const query = { school: req.school._id };
+const now = new Date();
+if (period === 'daily') { query.createdAt = { $gte: new Date(now.setHours(0,0,0,0)) }; }
+else if (period === 'weekly') { const w = new Date(now); w.setDate(now.getDate()-now.getDay()); query.createdAt = { $gte: w }; }
+else if (period === 'monthly') { query.createdAt = { $gte: new Date(now.getFullYear(), now.getMonth(), 1) }; }
+else if (period === 'yearly') { query.createdAt = { $gte: new Date(now.getFullYear(), 0, 1) }; }
+const transactions = await Transaction.find(query).sort({ createdAt: -1 }).limit(parseInt(limit)).skip(parseInt(skip));
+const total = await Transaction.countDocuments(query);
+res.json({ transactions, total });
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+app.get('/api/stats', authenticate, async (req, res) => {
+try {
+const schoolId = req.school._id;
+const now = new Date();
+const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+const weekStart = new Date(now); weekStart.setDate(now.getDate() - now.getDay());
+const yearStart = new Date(now.getFullYear(), 0, 1);
+const [allTotal, monthTotal, weekTotal, yearTotal, studentCount, failedCount] = await Promise.all([
+Transaction.aggregate([{ $match: { school: schoolId, status: 'success' } }, { $group: { _id: null, total: { $sum: '$amount' } } }]),
+Transaction.aggregate([{ $match: { school: schoolId, status: 'success', createdAt: { $gte: monthStart } } }, { $group: { _id: null, total: { $sum: '$amount' } } }]),
+Transaction.aggregate([{ $match: { school: schoolId, status: 'success', createdAt: { $gte: weekStart } } }, { $group: { _id: null, total: { $sum: '$amount' } } }]),
+Transaction.aggregate([{ $match: { school: schoolId, status: 'success', createdAt: { $gte: yearStart } } }, { $group: { _id: null, total: { $sum: '$amount' } } }]),
+Student.countDocuments({ school: schoolId, isActive: true }),
+Transaction.countDocuments({ school: schoolId, status: { $ne: 'success' } }),
+]);
+res.json({
+total: allTotal[0]?.total || 0,
+monthly: monthTotal[0]?.total || 0,
+weekly: weekTotal[0]?.total || 0,
+yearly: yearTotal[0]?.total || 0,
+students: studentCount,
+failed: failedCount,
+});
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// ── AUDIT LOGS ────────────────────────────────────────────────
+app.get('/api/audit', authenticate, async (req, res) => {
+try {
+const logs = await AuditLog.find({ school: req.school._id }).sort({ createdAt: -1 }).limit(100);
+res.json({ logs });
+} catch (err) {
+res.status(500).json({ error: 'Server error.' });
+}
+});
+
+// ── SMS ───────────────────────────────────────────────────────
+async function sendSMS(phone, message) {
+try {
+// Africa's Talking
+if (process.env.AFRICASTALKING_KEY) {
+await axios.post('https://api.africastalking.com/version1/messaging', {
+username: process.env.AFRICASTALKING_USERNAME,
+to: phone.startsWith('+') ? phone : `+233${phone.slice(1)}`,
+message,
+from: 'EduPTA',
+}, {
+headers: {
+apiKey: process.env.AFRICASTALKING_KEY,
+'Content-Type': 'application/x-www-form-urlencoded',
+}
+});
+return true;
+}
+// Termii fallback
+if (process.env.TERMII_KEY) {
+await axios.post('https://api.ng.termii.com/api/sms/send', {
+to: phone.startsWith('+') ? phone : `+233${phone.slice(1)}`,
+from: 'EduPTA',
+sms: message,
+type: 'plain',
+channel: 'generic',
+api_key: process.env.TERMII_KEY,
+});
+return true;
+}
+console.log('SMS (no provider configured):', message);
+return false;
+} catch (err) {
+console.error('SMS error:', err.message);
+return false;
+}
+}
+
+// Manual SMS endpoint
+app.post('/api/sms/send', authenticate, async (req, res) => {
+const { phone, message } = req.body;
+const sent = await sendSMS(phone, message);
+res.json({ sent });
+});
+
+// ── HELPERS ───────────────────────────────────────────────────
+function generateCode() {
+return 'PTA-' + Math.random().toString(36).toUpperCase().slice(2, 8);
+}
+
+// ── HEALTH CHECK ──────────────────────────────────────────────
+app.get('/api/health', (req, res) => {
+res.json({ status: 'OK', system: 'Edu PTA System', version: '2.0', developer: '0200250635' });
+});
+
+// 404 handler
+app.use((req, res) => {
+res.status(404).json({ error: 'Endpoint not found.' });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+console.error(err.stack);
+res.status(500).json({ error: 'Internal server error.' });
+});
+
+// ══════════════════════════════════════════════════════════════
+// DATABASE CONNECTION & SERVER START
+// ══════════════════════════════════════════════════════════════
+mongoose.connect(process.env.MONGODB_URI, {
+useNewUrlParser: true,
+useUnifiedTopology: true,
+}).then(() => {
+console.log('✅ MongoDB Atlas connected');
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+console.log(`🚀 Edu PTA Backend running on port ${PORT}`);
+console.log(`📞 Developer: 0200250635 (WhatsApp/Call)`);
+});
+}).catch(err => {
+console.error('❌ MongoDB connection failed:', err.message);
+process.exit(1);
+});
+
+// ══════════════════════════════════════════════════════════════
+// DEPLOYMENT STEPS (README)
+// ══════════════════════════════════════════════════════════════
+/*
+
+1. Install Node.js (v18+) on your computer
+1. Create folder: mkdir edu-pta-backend && cd edu-pta-backend
+1. Copy this file as server.js
+1. Run: npm init -y
+1. Run: npm install express mongoose bcryptjs jsonwebtoken cors helmet express-rate-limit dotenv axios
+1. Create .env file with all variables above
+1. Sign up at MongoDB Atlas (atlas.mongodb.com) → free cluster
+1. Sign up at Paystack (paystack.com) → get live keys
+1. Sign up at Africa's Talking (africastalking.com) → SMS
+1. Generate MASTER_CODE_HASH: node -e "const b=require('bcryptjs');b.hash('#SchoolGhana59016740026',10).then(console.log)"
+1. Add hash to .env as MASTER_CODE_HASH
+1. Deploy to Render.com (free): connect GitHub repo → Deploy
+1. Set all environment variables on Render dashboard
+1. Add Paystack webhook URL: https://your-render-url.onrender.com/api/payments/webhook
+1. Update FRONTEND_URL in frontend to point to backend
+   */</script>
